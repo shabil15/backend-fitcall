@@ -3,7 +3,8 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import morgan from "morgan";
-import userRouter from '../routes/userRoute';
+import userRouter from "../routes/userRoute";
+import adminRouter from "../routes/adminRoute";
 
 dotenv.config();
 export const app = express();
@@ -17,3 +18,4 @@ app.use(
 app.use(morgan("dev"));
 
 app.use("/api/user", userRouter);
+app.use("/api/admin", adminRouter);
