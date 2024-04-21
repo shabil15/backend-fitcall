@@ -4,6 +4,7 @@ import { IRequestValidator } from "../interface/repository/IValidRepository";
 import IHashpassword from "../interface/services/IHashpassword";
 import Ijwt from "../interface/services/IJwt";
 import { createUser } from "./user/createUser";
+import { loginUser } from "./user/loginUser";
 
 export class UserUseCase {
   private readonly userRepository: IUserRepository;
@@ -40,6 +41,17 @@ export class UserUseCase {
       this.bcrypt,
       name,
       mobile,
+      email,
+      password
+    );
+  }
+
+  async loginUser({ email, password }: { email: string; password: string }) {
+    return loginUser(
+      this.requestValidator,
+      this.userRepository,
+      this.bcrypt,
+      this.jwt,
       email,
       password
     );

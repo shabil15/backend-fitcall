@@ -10,4 +10,10 @@ router.post(
     userAdapter.createUser(req,res,next)
 );
 
+router.post(
+  "/login",
+  (req:Request,res:Response,next:NextFunction) => 
+    userAdapter.loginUser(req,res,next)
+)
+
 export default router

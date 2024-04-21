@@ -21,4 +21,17 @@ export class UserAdapter {
       next(error)
     }
   }
+
+  async loginUser(req:Req,res:Res,next:Next) {
+    try {
+      const user =await this.userusecase.loginUser(req.body);
+      user && res.status(user.status).json({
+        success:user.success,
+        data:user.data,
+        message:user.message,
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
 }
