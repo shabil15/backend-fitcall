@@ -11,7 +11,7 @@ const start = () => {
 
   app.listen(PORT,()=> {
     connectDB()
-    console.log(`Server connected to http://localhost/${PORT}`);
+    console.log(`Server connected to http://localhost/${PORT}`); 
   })
 }
 
