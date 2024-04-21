@@ -5,7 +5,6 @@ import cors from "cors";
 import morgan from "morgan";
 import userRouter from '../routes/userRoute';
 
-
 dotenv.config();
 export const app = express();
 
