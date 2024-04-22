@@ -7,3 +7,10 @@ export interface Response<T = IUser| IUser[]|string> {
   message?: string;
   data?: T;
 }
+
+
+export interface StoreData {
+  _id: string;
+  name: string;
+  email : string
+}

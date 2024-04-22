@@ -1,7 +1,7 @@
 import { Next, Req, Res } from "../infrastructure/types/expressTypes";
 import { AdminUseCase } from "../useCase/usecases/adminUseCase";
 
-export class AdminAdapter{
+export class AdminAdapter {
   private readonly adminusecase: AdminUseCase;
 
   constructor(adminusecase: AdminUseCase) {
@@ -12,10 +12,12 @@ export class AdminAdapter{
     try {
       const user = await this.adminusecase.loginAdmin(req.body);
       user &&
-        res.status(user.status).json({
-          succeess: user.success,
-          message: user.message,
-        });
+       
+      res.status(user.status).json({
+        succeess: user.success,
+        data:user.data,
+        message: user.message,
+      });
     } catch (error) {
       next(error);
     }
