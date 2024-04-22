@@ -1,14 +1,14 @@
 import ErrorResponse from "../../handler/errorResponse";
 import { IRequestValidator } from "../../interface/repository/IValidRepository";
 import INodemailer from "../../interface/services/Inodemailer";
-import { Response } from "../../interface/services/Iresponse";
+import { IResponse } from "../../interface/services/Iresponse";
 
 export const verifyEmail = async (
   requestValidator:IRequestValidator,
   nodemailer:INodemailer,
   email:string,
   name:string
-): Promise <Response> => {
+): Promise <IResponse> => {
   try {
     const validation =requestValidator.validateRequiredFields(
       {email,name},

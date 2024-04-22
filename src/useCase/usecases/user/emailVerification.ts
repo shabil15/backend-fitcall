@@ -1,14 +1,14 @@
 import ErrorResponse from "../../handler/errorResponse";
 import { IRequestValidator } from "../../interface/repository/IValidRepository";
 import INodemailer from "../../interface/services/Inodemailer";
-import { Response } from "../../interface/services/Iresponse";
+import { IResponse } from "../../interface/services/Iresponse";
 
 export const emailVerification = async (
   requestValidator: IRequestValidator,
   nodemailer: INodemailer,
   otp: string,
   email: string
-): Promise<Response> => {
+): Promise<IResponse> => {
   try {
     console.log(email);
 

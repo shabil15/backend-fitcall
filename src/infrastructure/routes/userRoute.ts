@@ -18,4 +18,9 @@ router.post("/sendEmail", (req: Request, res: Response, next: NextFunction) =>
 router.post("/verifyEmail", (req: Request, res: Response, next: NextFunction) =>
   userAdapter.emailVerification(req, res, next)
 );
+
+router.post('/googleAuth',(req:Request,res:Response,next:NextFunction)=>
+  userAdapter.googleAuth(req,res,next)
+)
+
 export default router;

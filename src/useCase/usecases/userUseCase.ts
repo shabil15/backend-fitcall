@@ -8,6 +8,7 @@ import { createUser } from "./user/createUser";
 import { loginUser } from "./user/loginUser";
 import { verifyEmail } from "./user/sendEmail";
 import { emailVerification } from "./user/emailVerification";
+import { googleAuth } from "./user/googleAuth";
 
 export class UserUseCase {
   private readonly userRepository: IUserRepository;
@@ -70,4 +71,26 @@ export class UserUseCase {
   async emailVerification({otp,email}:{otp:string,email:string} ) {
     return emailVerification(this.requestValidator,this.nodemailer,otp,email);
   }
+
+  async googleAuth({
+    name,
+    email,
+    password,
+  }: {
+    name:string;
+    email:string;
+    password:string;
+  }) {
+    return googleAuth(
+      this.requestValidator,
+      this.userRepository,
+      this.bcrypt,
+      this.jwt,
+      name,
+      email,
+      password
+    )
+  }
+
+  
 }
