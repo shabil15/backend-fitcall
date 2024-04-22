@@ -27,3 +27,9 @@ export interface IforgotPassword {
   email : string;
   password : string
 }
+
+export interface RequesEmailData{
+  name : string;
+  email: string;
+}
+

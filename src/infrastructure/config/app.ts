@@ -5,6 +5,8 @@ import cors from "cors";
 import morgan from "morgan";
 import userRouter from "../routes/userRoute";
 import adminRouter from "../routes/adminRoute";
+import trainerRouter from "../routes/trainerRoute";
+import errorHandler from "../../useCase/handler/errorHandler";
 
 dotenv.config();
 export const app = express();
@@ -19,3 +21,7 @@ app.use(morgan("dev"));
 
 app.use("/api/user", userRouter);
 app.use("/api/admin", adminRouter);
+app.use("/api/trainer", trainerRouter);
+
+
+app.use(errorHandler);
