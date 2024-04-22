@@ -9,6 +9,8 @@ import { loginUser } from "./user/loginUser";
 import { verifyEmail } from "./user/sendEmail";
 import { emailVerification } from "./user/emailVerification";
 import { googleAuth } from "./user/googleAuth";
+import { forgotPassword } from "./user/forgotPassword";
+import { sendOtpFogotPassword } from "./user/sendOtpForgotPassword";
 
 export class UserUseCase {
   private readonly userRepository: IUserRepository;
@@ -72,6 +74,27 @@ export class UserUseCase {
     return emailVerification(this.requestValidator,this.nodemailer,otp,email);
   }
 
+  async sendOtpFogotPassword({ email, name }: { email: string; name: string }) {
+    return sendOtpFogotPassword(this.requestValidator,this.userRepository, this.nodemailer, email, name);
+  }
+
+  async forgotPassword({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) {
+    return forgotPassword(
+      this.requestValidator,
+      this.userRepository,
+      this.bcrypt,
+      this.jwt,
+      email,
+      password
+    );
+  }
+
   async googleAuth({
     name,
     email,
@@ -92,5 +115,5 @@ export class UserUseCase {
     )
   }
 
-  
+
 }

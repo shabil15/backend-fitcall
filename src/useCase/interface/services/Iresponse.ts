@@ -22,3 +22,8 @@ export interface IResponse<T = StoreData | string> {
   data?: T;
   token? : string
 }
+
+export interface IforgotPassword {
+  email : string;
+  password : string
+}

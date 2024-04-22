@@ -23,4 +23,16 @@ router.post('/googleAuth',(req:Request,res:Response,next:NextFunction)=>
   userAdapter.googleAuth(req,res,next)
 )
 
+router.post(
+  "/sendOTPforgotPassword",
+  (req: Request, res: Response, next: NextFunction) =>
+    userAdapter.sendOtpFogotPassword(req, res, next)
+);
+
+router.post(
+  "/forgotPassword",
+  (req: Request, res: Response, next: NextFunction) =>
+    userAdapter.forgotPassword(req, res, next)
+);
+
 export default router;

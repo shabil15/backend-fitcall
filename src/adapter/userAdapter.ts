@@ -79,4 +79,36 @@ export class UserAdapter {
       next(error);
     }
   }
+
+  async sendOtpFogotPassword(req: Req, res: Res, next: Next) {
+    try {
+      const user = await this.userusecase.sendOtpFogotPassword(req.body);
+      res.status(user.status).json({
+        success: user.success,
+        message: user.message,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async forgotPassword(req:Req,res:Res,next: Next) {
+    try {
+      const newUser= await this.userusecase.forgotPassword(req.body)
+      newUser &&
+        res.cookie("userjwt", newUser.token, {
+          httpOnly: true,
+          sameSite: "strict", // Prevent CSRF attacks
+          maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+        });
+
+      res.status(newUser.status).json({
+        success: newUser.success,
+        message: newUser.message,
+        user: newUser.data,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
