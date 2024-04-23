@@ -9,4 +9,10 @@ router.post(
     trainerAdapter.createTrainer(req,res,next)
 )
 
+router.post(
+  "/login",
+  (req:Request,res:Response,next:NextFunction) => 
+    trainerAdapter.loginTrainer(req,res,next)
+)
+
 export default router

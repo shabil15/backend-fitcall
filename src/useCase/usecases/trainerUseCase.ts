@@ -3,6 +3,7 @@ import { ITrainerRepository } from "../interface/repository/ITrainerRepository";
 import IHashpassword from "../interface/services/IHashpassword";
 import Ijwt from "../interface/services/IJwt";
 import { createTrainer } from "./trainer/createTrainer";
+import { loginTrainer } from "./trainer/loginTrainer";
 
 export class TrainerUseCase {
   private readonly trainerRepository: ITrainerRepository;
@@ -57,5 +58,16 @@ export class TrainerUseCase {
       certificate,
       profile_img
     );
+  }
+
+  async loginTrainer({email,password}:{email:string;password:string}) {
+    return loginTrainer(
+      this.requestValidator,
+      this.trainerRepository,
+      this.bcrypt,
+      this.jwt,
+      email,
+      password
+    )
   }
 }

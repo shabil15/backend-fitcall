@@ -20,4 +20,24 @@ export class TrainerAdapter{
       next(error)
     }
   }
+
+  async loginTrainer(req:Req,res:Res,next:Next) {
+    try {
+      const trainer= await this.trainerusecase.loginTrainer(req.body);
+      trainer && 
+      res.cookie("trainerjwt",trainer.token,{
+        httpOnly:true,
+        sameSite:"strict",
+        maxAge:30 *24 * 60 * 60 * 100,
+      }) 
+
+      res.status(trainer.status).json({
+        success:trainer.success,
+        data:trainer.data,
+        message:trainer.message,
+      })
+    } catch (error) {
+      next(error);
+    }
+  }
 }

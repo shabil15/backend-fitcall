@@ -23,6 +23,12 @@ export interface IResponse<T = StoreData | string> {
   token? : string
 }
 
+export interface trainerResponseData extends StoreData{
+  img? : string,
+  joinDate? : Date
+}
+
+
 export interface IforgotPassword {
   email : string;
   password : string
