@@ -77,7 +77,7 @@ export class UserUseCase {
   async sendOtpFogotPassword({ email, name }: { email: string; name: string }) {
     return sendOtpFogotPassword(this.requestValidator,this.userRepository, this.nodemailer, email, name);
   }
-
+  
   async forgotPassword({
     email,
     password,

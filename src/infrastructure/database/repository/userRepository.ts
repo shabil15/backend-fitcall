@@ -4,6 +4,7 @@ import { IforgotPassword,StoreData } from "../../../useCase/interface/services/I
 import UserModel from "../model/userModel";
 import { createUser } from "./user/createUser";
 import { findUser } from "./user/findUser";
+import { blockUser } from "./user/blockUser";
 import { forgotPassword } from "./user/forgotPassword";
 
 
@@ -16,6 +17,10 @@ export class UserRepository implements IUserRepository {
 
    async findUser(email: string): Promise<IUser | null> {
       return findUser(email,this.usersModel);
+  }
+
+  async blockUser(_id: string): Promise<string | null> {
+    return blockUser(_id,this.usersModel)
   }
 
   async forgotPassword(newPassword: IforgotPassword): Promise<StoreData> {

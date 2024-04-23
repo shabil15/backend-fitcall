@@ -16,4 +16,11 @@ router.get(
     adminAdapter.getUsers(req, res, next)
 );
 
+router.patch(
+  "/users/unblock-block",
+  AuthMiddleware.protectAdmin,
+  (req: Request, res: Response, next: NextFunction) =>
+    adminAdapter.blockUnblockUser(req, res, next)
+);
+
 export default router;
