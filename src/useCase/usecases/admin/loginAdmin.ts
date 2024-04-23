@@ -4,7 +4,7 @@ import { IAdminRepository } from "../../interface/repository/IAdminRepository";
 import { IRequestValidator } from "../../interface/repository/IValidRepository";
 import IHashpassword from "../../interface/services/IHashpassword";
 import Ijwt from "../../interface/services/IJwt";
-import { IResponse, } from "../../interface/services/Iresponse";
+import { IResponse, StoreData} from "../../interface/services/Iresponse";
 
 export const loginAdmin = async (
   requestValidator: IRequestValidator,
@@ -35,9 +35,18 @@ export const loginAdmin = async (
           "admin",
           admin.name
         );
+
+        const responseData : StoreData = {
+          _id: admin._id,
+          name: admin.name,
+          email : admin.email
+        }
+
         return {
           status: 200,
           success: true,
+          data:responseData,
+          token:token,
           message: "Successfully logged In",
         };
       }

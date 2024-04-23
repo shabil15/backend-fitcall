@@ -11,14 +11,14 @@ router.post("/login",
 
 router.get(
   "/getUsers",
-  AuthMiddleware.protectAdmin,
+  //AuthMiddleware.protectAdmin,
   (req: Request, res: Response, next: NextFunction) =>
     adminAdapter.getUsers(req, res, next)
 );
 
 router.patch(
   "/users/unblock-block",
-  AuthMiddleware.protectAdmin,
+  // AuthMiddleware.protectAdmin,
   (req: Request, res: Response, next: NextFunction) =>
     adminAdapter.blockUnblockUser(req, res, next)
 );
