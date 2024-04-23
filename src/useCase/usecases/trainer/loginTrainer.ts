@@ -5,7 +5,6 @@ import { ITrainerRepository } from "../../interface/repository/ITrainerRepositor
 import IHashpassword from "../../interface/services/IHashpassword";
 import Ijwt from "../../interface/services/IJwt";
 import { IResponse,trainerResponseData } from "../../interface/services/Iresponse";
-import RequestValidator from "../../../infrastructure/services/validateRepository";
 
 export const loginTrainer = async(
   requestValidator:IRequestValidator,

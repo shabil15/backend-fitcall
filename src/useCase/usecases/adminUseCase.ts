@@ -3,6 +3,7 @@ import { IRequestValidator } from "../interface/repository/IValidRepository";
 import IHashpassword from "../interface/services/IHashpassword";
 import Ijwt from "../interface/services/IJwt";
 import { loginAdmin } from "./admin/loginAdmin";
+import { getUsers } from "./admin/getUser";
 
 export class AdminUseCase {
   private readonly userRepository: IAdminRepository;
@@ -32,4 +33,10 @@ export class AdminUseCase {
       password
     )
   }
+
+  async findAllUser() {
+    return getUsers()
+  }
+
+  
 }

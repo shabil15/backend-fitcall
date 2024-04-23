@@ -22,4 +22,17 @@ export class AdminAdapter {
       next(error);
     }
   }
+
+  async getUsers(req:Req,res:Res,next:Next) {
+    try {
+      const user = await this.adminusecase.findAllUser();
+      user && 
+      res.status(user.status).json({
+        success:user.success,
+        data:user.data,
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
 }

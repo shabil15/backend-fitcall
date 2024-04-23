@@ -23,6 +23,14 @@ export interface IResponse<T = StoreData | string> {
   token? : string
 }
 
+export interface IUserResponse<T = IUser| IUser[]|string> {
+  status: number;
+  success: boolean;
+  message?: string;
+  data?: T;
+  token? : string
+}
+
 export interface trainerResponseData extends StoreData{
   img? : string,
   joinDate? : Date
