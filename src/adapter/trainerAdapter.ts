@@ -10,6 +10,7 @@ export class TrainerAdapter{
 
   async createTrainer(req:Req,res:Res,next:Next) {
     try {
+      console.log("createTrainer");
       const newTrainer  = await this.trainerusecase.createTrainer(req.body);
       newTrainer && 
       res.status(newTrainer.status).json({

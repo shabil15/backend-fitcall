@@ -50,4 +50,36 @@ export class AdminAdapter {
       next(error);
     }
   }
+
+  async getJoinRequests(req: Req, res: Res, next: Next) {
+    
+    try {
+      const requests = await this.adminusecase.findAllRequests();
+      requests &&
+        res.status(requests.status).json({
+          success: requests.success,
+          data: requests.data,
+        });
+        console.log(requests);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async reviewRequests(req:Req,res:Res,next:Next) {
+    try {
+      const trainer = await this.adminusecase.reviewRequests(req.body);
+      trainer && 
+      res.status(trainer.status).json({
+        success:trainer.success,
+        data:trainer.data,
+        messager:trainer.message,
+      });
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  
 }
+

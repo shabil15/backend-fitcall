@@ -23,4 +23,17 @@ router.patch(
     adminAdapter.blockUnblockUser(req, res, next)
 );
 
+
+router.get(
+  "/getJoinRequests",
+  (req: Request, res: Response, next: NextFunction) =>
+    adminAdapter.getJoinRequests(req, res, next)
+);
+
+router.patch(
+  "/reviewRequests",
+  (req:Request,res:Response,next:NextFunction) => 
+    adminAdapter.reviewRequests(req,res,next)
+)
+
 export default router;
