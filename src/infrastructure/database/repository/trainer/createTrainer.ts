@@ -8,7 +8,7 @@ export const createTrainer = async (
   try {
     const trainer = await trainerModel.create(newTrainer);
     await trainer.save()
-    return "Your Join Request has been successfully,Please wait for further updates";
+    return "Your Join Request has been Sent successfully,Please wait for further updates";
   } catch (error) {
     throw error
   }

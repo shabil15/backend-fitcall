@@ -11,7 +11,9 @@ export class TrainerAdapter{
   async createTrainer(req:Req,res:Res,next:Next) {
     try {
       console.log("createTrainer");
+      console.log("Req",req.body);
       const newTrainer  = await this.trainerusecase.createTrainer(req.body);
+      console.log(newTrainer)
       newTrainer && 
       res.status(newTrainer.status).json({
         success:newTrainer.success,

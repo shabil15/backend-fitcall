@@ -9,6 +9,7 @@ const trainerSchema: Schema = new Schema<ITrainer & Document>(
     mobile: { type: String, default: "" },
     description: { type: String, default: "" },
     language: { type: String, required: true },
+    specialisation: { type: String, required: true },
     profile_img: { type: String, default: "" },
     certificate: { type: String, default: "" },
     status: { type: String, default: "pending" },
