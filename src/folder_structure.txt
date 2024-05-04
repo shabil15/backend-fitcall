@@ -1,0 +1,27 @@
+Folder PATH listing
+Volume serial number is 0A37-BEE9
+C:.
++---adapter
++---domain
++---infrastructure
+|   +---config
+|   +---database
+|   |   +---model
+|   |   \---repository
+|   |       +---admin
+|   |       +---trainer
+|   |       \---user
+|   +---Middleware
+|   +---routes
+|   |   \---injections
+|   +---services
+|   \---types
+\---useCase
+    +---handler
+    +---interface
+    |   +---repository
+    |   \---services
+    \---usecases
+        +---admin
+        +---trainer
+        \---user

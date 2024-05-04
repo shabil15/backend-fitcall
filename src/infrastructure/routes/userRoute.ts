@@ -35,4 +35,9 @@ router.post(
     userAdapter.forgotPassword(req, res, next)
 );
 
+ router.post(
+  "/logout",
+  (req:Request,res:Response,next:NextFunction) => 
+    userAdapter.logoutUser(req,res,next)
+ )
 export default router;
