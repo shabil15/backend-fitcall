@@ -36,4 +36,10 @@ router.patch(
     adminAdapter.reviewRequests(req,res,next)
 )
 
+router.patch(
+  "/trainer/unblock-block",
+  (req:Request,res:Response,next:NextFunction) => 
+    adminAdapter.block_unBlockTrainer(req,res,next)
+)
+
 export default router;

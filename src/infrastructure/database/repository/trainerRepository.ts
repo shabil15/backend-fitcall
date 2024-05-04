@@ -5,6 +5,7 @@ import TrainerModel from "../model/trainerModel";
 import { createTrainer } from "./trainer/createTrainer";
 import { findTrainer } from "./trainer/findTrainer";
 import { reviewRequests } from "./trainer/reviewRequests";
+import { blockTrainer } from "./trainer/blockTrainer";
 
 
 export class TrainerRepository implements ITrainerRepository{
@@ -21,5 +22,9 @@ export class TrainerRepository implements ITrainerRepository{
   
   async reviewRequests(id: string, status: string): Promise<RequesEmailData> {
       return reviewRequests(id,status,this.trainerModel)
+  }
+
+ async blockTrainer(_id: string): Promise<string | null> {
+      return blockTrainer(_id,this.trainerModel);
   }
 }

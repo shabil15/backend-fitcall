@@ -10,6 +10,7 @@ import { getUsers } from "./admin/getUser";
 import { blockUnblockUser } from "./admin/blockUser";
 import { getJoinRequests } from "./admin/getJoinRequests";
 import { reviewRequests } from "./admin/reviewRequests";
+import { block_unBlockTrainer } from "./admin/blockTrainer";
 
 export class AdminUseCase {
   private readonly adminRepository :IAdminRepository;
@@ -76,4 +77,11 @@ export class AdminUseCase {
     )
   }
 
+  async block_unBlockTrainer(_id:string) {
+    return block_unBlockTrainer(
+      this.requestValidator,
+      this.trainerRepository,
+      _id
+    )
+  }
 }

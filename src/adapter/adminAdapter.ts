@@ -54,6 +54,7 @@ export class AdminAdapter {
   async getJoinRequests(req: Req, res: Res, next: Next) {
     
     try {
+      console.log("getUserDatas");
       const requests = await this.adminusecase.findAllRequests();
       requests &&
         res.status(requests.status).json({
@@ -80,6 +81,22 @@ export class AdminAdapter {
     }
   }
 
+  async block_unBlockTrainer(req:Req,res:Res,next:Next) {
+    try {
+      console.log("blockTrainer")
+      const _id = req.query.id as string;
+      
+      const trainer = await this.adminusecase.block_unBlockTrainer(_id);
+      trainer && 
+        res.status(trainer.status).json({
+          success:trainer.success,
+          data:trainer.data,
+          message:trainer.message
+        })
+    } catch (error) {
+        next(error);      
+    }
+  }
   
 }
 
