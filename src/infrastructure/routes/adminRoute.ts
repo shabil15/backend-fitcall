@@ -42,4 +42,10 @@ router.patch(
     adminAdapter.block_unBlockTrainer(req,res,next)
 )
 
+router.post(
+  "/logout",
+  (req:Request,res:Response,next:NextFunction) =>
+    adminAdapter.logoutAdmin(req,res,next)
+)
+
 export default router;

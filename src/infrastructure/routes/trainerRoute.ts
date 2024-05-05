@@ -15,4 +15,10 @@ router.post(
     trainerAdapter.loginTrainer(req,res,next)
 )
 
+router.post(
+  "/logout",
+  (req:Request,res:Response,next:NextFunction) => 
+    trainerAdapter.logoutTrainer(req,res,next)
+)
+
 export default router

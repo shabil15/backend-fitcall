@@ -43,4 +43,16 @@ export class TrainerAdapter{
       next(error);
     }
   }
+
+  async logoutTrainer(req:Req,res:Res,next:Next) {
+    try {
+      res.cookie("jwt","",{
+        httpOnly:true,
+        expires:new Date(0),
+      })
+      res.status(200).json({message:"Logged out successfully"})
+    } catch (error) {
+      next(error)
+    }
+  }
 }
