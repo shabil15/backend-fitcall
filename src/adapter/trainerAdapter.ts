@@ -16,7 +16,7 @@ export class TrainerAdapter{
       console.log(newTrainer)
       newTrainer && 
       res.status(newTrainer.status).json({
-        success:newTrainer.success,
+        success:newTrainer.success, 
         message:newTrainer.message
       })
     } catch (error) {
