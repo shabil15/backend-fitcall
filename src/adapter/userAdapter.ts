@@ -123,4 +123,18 @@ export class UserAdapter {
       next(error)
     }
   }
+
+  async getTrainers(req:Req,res:Res,next:Next) {
+    try {
+      console.log("getTraienrs");
+      const traiers = await this.userusecase.findAcceptedTrainers();
+      traiers && 
+      res.status(traiers.status).json({
+        success:traiers.success,
+        data:traiers.data,
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
 }

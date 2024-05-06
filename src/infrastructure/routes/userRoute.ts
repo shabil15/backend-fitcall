@@ -40,4 +40,11 @@ router.post(
   (req:Request,res:Response,next:NextFunction) => 
     userAdapter.logoutUser(req,res,next)
  )
+
+ router.get(
+  "/getTrainers",
+  (req:Request,res:Response,next:NextFunction) => 
+    userAdapter.getTrainers(req,res,next)
+ )
+ 
 export default router;

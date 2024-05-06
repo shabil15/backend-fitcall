@@ -11,6 +11,7 @@ import { emailVerification } from "./user/emailVerification";
 import { googleAuth } from "./user/googleAuth";
 import { forgotPassword } from "./user/forgotPassword";
 import { sendOtpFogotPassword } from "./user/sendOtpForgotPassword";
+import { getTrainers } from "./user/getTrainers";
 
 export class UserUseCase {
   private readonly userRepository: IUserRepository;
@@ -115,5 +116,8 @@ export class UserUseCase {
     )
   }
 
+  async findAcceptedTrainers(){
+    return getTrainers();
+  }
 
 }
