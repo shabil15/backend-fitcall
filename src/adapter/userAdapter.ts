@@ -12,6 +12,13 @@ export class UserAdapter {
     try {
       const newUser = await this.userusecase.createUser(req.body);
       newUser &&
+
+      res.cookie("userjwt", newUser.token, {
+        httpOnly: true,
+        sameSite: "strict", 
+        maxAge: 30 * 24 * 60 * 60 * 1000,   
+      });
+
         res.status(newUser.status).json({
           success: newUser.success,
           message: newUser.message,
@@ -50,6 +57,13 @@ export class UserAdapter {
     try {
       const user = await this.userusecase.loginUser(req.body);
       user &&
+
+      res.cookie("userjwt", user.token, {
+        httpOnly: true,
+        sameSite: "strict", 
+        maxAge: 30 * 24 * 60 * 60 * 1000, 
+      });
+
         res.status(user.status).json({
           success: user.success,
           data: user.data,
@@ -127,14 +141,55 @@ export class UserAdapter {
   async getTrainers(req:Req,res:Res,next:Next) {
     try {
       console.log("getTraienrs");
-      const traiers = await this.userusecase.findAcceptedTrainers();
-      traiers && 
-      res.status(traiers.status).json({
-        success:traiers.success,
-        data:traiers.data,
+      const { page = 1, per_page = 4, specialisation, language, search } = req.query;
+      
+      const trainers = await this.userusecase.findAcceptedTrainers(+page,
+        +per_page,
+        specialisation?.toString() || "", // Provide default value if specialisation is undefined
+        language?.toString() || "", // Provide default value if language is undefined
+        search?.toString() || "" // Provide default value if search is undefined);
+      )
+      trainers && 
+      res.status(trainers.status).json({
+        success:trainers.success,
+        data:trainers.data,
+        total:trainers.total
       })
     } catch (error) {
       next(error)
     }
   }
+
+  async getTrainerDetails(req:Req,res:Res,next:Next) {
+    try{
+      const {id} = req.query;
+      if (typeof id === 'string') {
+        const trainer = await this.userusecase.getTrainerDetails(id);
+        trainer && 
+        res.status(trainer.status).json({
+          success:trainer.success,
+          data:trainer.data
+        });
+      } else {
+        res.status(400).json({ success: false, message: 'Invalid id' });
+      }
+    }catch(error){
+      next(error);
+    } 
+  }
+
+  async addProfile(req: Req, res: Res, next: Next) {
+    try {
+      const user = await this.userusecase.addProfile(req.body);
+      user &&
+      res.status(user.status).json({
+        success: user.success,
+        message: user.message,
+        user: user.data,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
 }

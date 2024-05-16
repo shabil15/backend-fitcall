@@ -37,7 +37,8 @@ export const loginUser = async (
         return {
           status: 200,
           success: true,
-          data: token,
+          token:token,
+          data: user,
           message: "Successfully logged In",
         };
       }
