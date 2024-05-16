@@ -12,6 +12,9 @@ import { googleAuth } from "./user/googleAuth";
 import { forgotPassword } from "./user/forgotPassword";
 import { sendOtpFogotPassword } from "./user/sendOtpForgotPassword";
 import { getTrainers } from "./user/getTrainers";
+import { getTrainerDetails } from "./user/getTrainerData";
+import { addProfile } from "./user/addProfile";
+
 
 export class UserUseCase {
   private readonly userRepository: IUserRepository;
@@ -116,8 +119,27 @@ export class UserUseCase {
     )
   }
 
-  async findAcceptedTrainers(){
-    return getTrainers();
+  async findAcceptedTrainers(page: number, perPage: number, specialisation: string, language: string, search: string){
+    return getTrainers(page, perPage, specialisation, language, search);
   }
 
+  async getTrainerDetails(trainerId: string){
+    return getTrainerDetails(trainerId);
+  }
+
+  async addProfile({
+    profile_img,
+    _id,
+ }: {
+ profile_img : string,
+ _id : string
+ }) {
+   return addProfile(
+     this.requestValidator,
+     this.userRepository,
+     profile_img,
+     _id
+   );
+ }
+ 
 }

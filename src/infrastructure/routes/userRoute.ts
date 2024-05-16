@@ -46,5 +46,16 @@ router.post(
   (req:Request,res:Response,next:NextFunction) => 
     userAdapter.getTrainers(req,res,next)
  )
+
+ router.get(
+  "/trainers/profile",
+  (req:Request,res:Response,next:NextFunction) =>
+    userAdapter.getTrainerDetails(req,res,next)
+ )
+
+ router.patch("/addProfile",
+ (req: Request, res: Response, next: NextFunction) =>
+  userAdapter.addProfile(req, res, next)
+);
  
 export default router;

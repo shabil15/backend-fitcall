@@ -6,4 +6,5 @@ export interface IUserRepository {
   findUser(email: string): Promise<IUser | null>;
   blockUser(_id:string):Promise<string | null>;
   forgotPassword(newPassword:IforgotPassword): Promise<StoreData>
+  addProfile(profile_img:string,_id:string): Promise<IUser | never>;
 }

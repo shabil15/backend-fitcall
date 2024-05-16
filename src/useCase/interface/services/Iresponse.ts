@@ -53,5 +53,6 @@ export interface ITrainerResponse<T = ITrainer| ITrainer[]|string> {
   success: boolean;
   message?: string;
   data?: T;
-  token? : string
+  token? : string;
+  total?: number;
 }

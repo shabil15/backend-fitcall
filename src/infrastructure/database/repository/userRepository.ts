@@ -6,6 +6,7 @@ import { createUser } from "./user/createUser";
 import { findUser } from "./user/findUser";
 import { blockUser } from "./user/blockUser";
 import { forgotPassword } from "./user/forgotPassword";
+import { addProfile } from "./user/addProfile";
 
 
 export class UserRepository implements IUserRepository {
@@ -26,4 +27,10 @@ export class UserRepository implements IUserRepository {
   async forgotPassword(newPassword: IforgotPassword): Promise<StoreData> {
     return forgotPassword(newPassword, this.usersModel);
   }
+
+  async addProfile(profile_img:string,_id: string): Promise<IUser | never> {
+    return addProfile(_id,profile_img,this.usersModel)
+  }
+
+
 }
