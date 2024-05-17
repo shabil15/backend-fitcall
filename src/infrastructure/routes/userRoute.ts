@@ -57,5 +57,10 @@ router.post(
  (req: Request, res: Response, next: NextFunction) =>
   userAdapter.addProfile(req, res, next)
 );
+
+router.patch("/updateProfile",
+ (req: Request, res: Response, next: NextFunction) =>
+  userAdapter.updateProfile(req, res, next)
+);
  
 export default router;

@@ -14,6 +14,7 @@ import { sendOtpFogotPassword } from "./user/sendOtpForgotPassword";
 import { getTrainers } from "./user/getTrainers";
 import { getTrainerDetails } from "./user/getTrainerData";
 import { addProfile } from "./user/addProfile";
+import { updateProfile } from "./user/updateProfile";
 
 
 export class UserUseCase {
@@ -141,5 +142,23 @@ export class UserUseCase {
      _id
    );
  }
+
+ async updateProfile({
+  _id,
+  name,
+  mobile
+}: {
+_id : string,
+name : string,
+mobile : string
+}) {
+ return updateProfile(
+   this.requestValidator,
+   this.userRepository,
+   _id,
+   name,
+   mobile
+ );
+}
  
 }
