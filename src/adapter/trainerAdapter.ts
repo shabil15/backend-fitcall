@@ -55,4 +55,18 @@ export class TrainerAdapter{
       next(error)
     }
   }
+  
+  async updateProfile(req:Req, res:Res,next:Next) {
+    try {
+      const trainer= await this.trainerusecase.updateProfile(req.body);
+      trainer && 
+      res.status(trainer.status).json({
+        success:trainer.success,
+        data:trainer.data,
+        message:trainer.message,
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
 }

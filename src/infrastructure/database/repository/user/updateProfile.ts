@@ -1,6 +1,7 @@
 import { IUser } from "../../../../domain/user";
 import UserModel from "../../model/userModel";
 
+
 // Correct the parameter type for _id
 export const updateProfile = async (
     data : Record<string,string>,

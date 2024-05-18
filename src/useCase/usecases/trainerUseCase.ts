@@ -4,6 +4,7 @@ import IHashpassword from "../interface/services/IHashpassword";
 import Ijwt from "../interface/services/IJwt";
 import { createTrainer } from "./trainer/createTrainer";
 import { loginTrainer } from "./trainer/loginTrainer";
+import { updateProfile } from "./trainer/updateProfile";
 
 export class TrainerUseCase {
   private readonly trainerRepository: ITrainerRepository;
@@ -12,12 +13,12 @@ export class TrainerUseCase {
   private readonly requestValidator: IRequestValidator;
 
   constructor(
-    traierRepository: ITrainerRepository,
+    trainerRepository: ITrainerRepository,
     bcrypt: IHashpassword,
     jwt: Ijwt,
     requestValidator: IRequestValidator
   ) {
-    this.trainerRepository = traierRepository;
+    this.trainerRepository = trainerRepository;
     this.bcrypt = bcrypt;
     this.jwt = jwt;
     this.requestValidator = requestValidator;
@@ -70,4 +71,23 @@ export class TrainerUseCase {
       password
     )
   }
+
+  async updateProfile({
+    _id,
+    name,
+    mobile
+  }: {
+  _id : string,
+  name : string,
+  mobile : string
+  }) {
+   return updateProfile(
+     this.requestValidator,
+     this.trainerRepository,
+     _id,
+     name,
+     mobile
+   );
+  }
+   
 }

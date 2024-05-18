@@ -21,4 +21,10 @@ router.post(
     trainerAdapter.logoutTrainer(req,res,next)
 )
 
+router.patch(
+  "/updateProfile",
+  (req:Request, res:Response,next:NextFunction) =>
+    trainerAdapter.updateProfile(req,res,next)
+)
+
 export default router
