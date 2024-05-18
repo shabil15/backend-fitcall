@@ -27,4 +27,11 @@ router.patch(
     trainerAdapter.updateProfile(req,res,next)
 )
 
+
+router.patch(
+  "/addProfile",
+  (req:Request, res:Response, next:NextFunction) =>
+    trainerAdapter.addProfile(req,res,next)
+)
+
 export default router

@@ -69,4 +69,19 @@ export class TrainerAdapter{
       next(error)
     }
   }
+
+
+  async addProfile(req:Req,res:Res,next:Next){
+    try {
+        const trainer= await this.trainerusecase.addProfile(req.body);
+        trainer && 
+        res.status(trainer.status).json({
+          success:trainer.success,
+          data:trainer.data,
+          message:trainer.message,
+        })
+    } catch (error) {
+      next(error)
+    }
+  }
 }

@@ -5,6 +5,7 @@ import Ijwt from "../interface/services/IJwt";
 import { createTrainer } from "./trainer/createTrainer";
 import { loginTrainer } from "./trainer/loginTrainer";
 import { updateProfile } from "./trainer/updateProfile";
+import { addProfile } from "./trainer/addProfile";
 
 export class TrainerUseCase {
   private readonly trainerRepository: ITrainerRepository;
@@ -89,5 +90,21 @@ export class TrainerUseCase {
      mobile
    );
   }
+
+
+  async addProfile({
+    profile_img,
+    _id,
+ }: {
+ profile_img : string,
+ _id : string
+ }) {
+   return addProfile(
+     this.requestValidator,
+     this.trainerRepository,
+     profile_img,
+     _id
+   );
+ }
    
 }

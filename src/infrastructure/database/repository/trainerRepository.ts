@@ -7,7 +7,7 @@ import { findTrainer } from "./trainer/findTrainer";
 import { reviewRequests } from "./trainer/reviewRequests";
 import { blockTrainer } from "./trainer/blockTrainer";
 import { updateProfile } from "./trainer/updateProfile";
-
+import { addProfile } from "./trainer/addProfile";
 
 export class TrainerRepository implements ITrainerRepository{
   constructor(private readonly trainerModel:typeof TrainerModel){}
@@ -32,5 +32,9 @@ export class TrainerRepository implements ITrainerRepository{
   async updateProfile(data: Record<string, string>): Promise<ITrainer| never>{
     return updateProfile(data,this.trainerModel)
   }
-  
+  async addProfile(profile_img:string,_id: string): Promise<ITrainer | never> {
+    return addProfile(_id,profile_img,this.trainerModel)
+  }
+
+
 }
