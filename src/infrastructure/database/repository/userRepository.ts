@@ -1,6 +1,6 @@
 import { IUser } from "../../../domain/user";
 import { IUserRepository } from "../../../useCase/interface/repository/IUserRepository";
-import { IforgotPassword,StoreData } from "../../../useCase/interface/services/Iresponse";
+import { IforgotPassword,StoreData,paymentDatas } from "../../../useCase/interface/services/Iresponse";
 import UserModel from "../model/userModel";
 import { createUser } from "./user/createUser";
 import { findUser } from "./user/findUser";
@@ -8,6 +8,8 @@ import { blockUser } from "./user/blockUser";
 import { forgotPassword } from "./user/forgotPassword";
 import { addProfile } from "./user/addProfile";
 import { updateProfile } from "./user/updateProfile";
+import { payment } from "./user/payment";
+import { paymentData } from "./payment/paymentData";
 
 
 export class UserRepository implements IUserRepository {
@@ -36,5 +38,14 @@ export class UserRepository implements IUserRepository {
   async updateProfile(data: Record<string, string>): Promise<IUser | never>{
     return updateProfile(data,this.usersModel)
   }
+
+  async payment(email:string):Promise<StoreData>{
+    return payment(email,this.usersModel)
+}
+
+async paymentData(email:string,amount:number,transactionId:string,userId:string):Promise<paymentDatas>{
+  return paymentData(email,amount,transactionId,userId,this.usersModel);
+
+}
  
 }

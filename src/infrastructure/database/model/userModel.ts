@@ -9,6 +9,12 @@ const userSchema: Schema = new Schema<IUser & Document>(
     mobile: { type: String, default: "" },
     profile_img: { type: String, default: "" },
     isBlocked: { type: Boolean, default: false },
+    isSubscribed:{type:Boolean, default: false},
+    subscriptionPlan: { type: String, enum: ["Monthly", "Annual"], default: null },
+    subscriptionStart: { type: Date, default: null },
+    subscriptionEnd: { type: Date, default: null },
+    trainerId: { type: String, default: null },
+    paymentId: { type: String, default: null },
   },
   {
     timestamps: true,

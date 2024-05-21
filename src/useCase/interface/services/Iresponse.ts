@@ -56,3 +56,12 @@ export interface ITrainerResponse<T = ITrainer| ITrainer[]|string> {
   token? : string;
   total?: number;
 }
+
+export interface paymentDatas{
+  _id?:string;
+  name?:string;
+  amount?:number;
+  transactionId?:string;
+  userId?:string;
+  email?:string;
+}

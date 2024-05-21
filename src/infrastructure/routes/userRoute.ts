@@ -62,5 +62,16 @@ router.patch("/updateProfile",
  (req: Request, res: Response, next: NextFunction) =>
   userAdapter.updateProfile(req, res, next)
 );
+
+router.post('/payment',(req:Request,res:Response,next:NextFunction)=>{
+  userAdapter.payment(req,res,next)
+})
+
+
+router.post('/webhook',(req:Request,res:Response,next:NextFunction)=>{
+  userAdapter.webhook(req,res,next)
+})
+
+
  
 export default router;

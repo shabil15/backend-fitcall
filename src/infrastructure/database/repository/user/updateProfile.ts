@@ -8,7 +8,7 @@ export const updateProfile = async (
     userModels: typeof UserModel
 ): Promise<IUser | never> => {
     try {
-       
+       console.log("user update")
         const user = await userModels.findOne({ _id: data._id}).select("-password");
         if (user) {
             // Assuming isStatus is a property on the user model

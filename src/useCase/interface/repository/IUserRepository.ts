@@ -1,5 +1,5 @@
 import { IUser } from "../../../domain/user";
-import { IforgotPassword,StoreData } from "../services/Iresponse";
+import { IforgotPassword,StoreData,paymentDatas } from "../services/Iresponse";
 
 export interface IUserRepository {
   createUser(newUser: IUser): Promise<IUser>;
@@ -9,4 +9,6 @@ export interface IUserRepository {
   addProfile(profile_img:string,_id:string): Promise<IUser | never>;
   updateProfile(data:Record<string,string>): Promise<IUser>;
   // updateProfile(data:Record<string,string>): Promise<IUser>;
+  payment(email:string):Promise<StoreData>;
+  paymentData(email:string,amount:number,transactionId:string,userId:string): Promise<paymentDatas>;
 }

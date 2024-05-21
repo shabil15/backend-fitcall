@@ -15,6 +15,9 @@ import { getTrainers } from "./user/getTrainers";
 import { getTrainerDetails } from "./user/getTrainerData";
 import { addProfile } from "./user/addProfile";
 import { updateProfile } from "./user/updateProfile";
+import {createPayment } from "./user/createPayment";
+import { finalConfirmation } from "./user/finalConfirmation";
+import IStripe from "../interface/services/IStripe";
 
 
 export class UserUseCase {
@@ -23,19 +26,22 @@ export class UserUseCase {
   private readonly jwt: Ijwt;
   private readonly nodemailer: INodemailer;
   private readonly requestValidator: IRequestValidator;
-
+  private readonly stripe:IStripe;
   constructor(
     userRepository: IUserRepository,
     bcrypt: IHashpassword,
     jwt: Ijwt,
     nodemailer: INodemailer,
-    requestValidator: IRequestValidator
+    requestValidator: IRequestValidator,
+    stripe:IStripe
+
   ) {
     this.userRepository = userRepository;
     this.bcrypt = bcrypt;
     this.jwt = jwt;
     this.nodemailer = nodemailer;
     this.requestValidator = requestValidator;
+    this.stripe = stripe;
   }
 
   async createUser({
@@ -161,4 +167,12 @@ mobile : string
  );
 }
  
+  async createPayment({amount,email,userId}:{amount:number,email:string,userId:string}){
+    return createPayment(this.stripe,amount,email,userId)
+  }
+
+  async finalConfirmation({email,amount,transactionId,userId}:{email:string,amount:number,transactionId:string,userId:string}){
+    return finalConfirmation(this.userRepository,email,amount,transactionId,userId)
+}
+
 }

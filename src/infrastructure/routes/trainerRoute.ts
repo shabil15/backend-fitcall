@@ -22,7 +22,7 @@ router.post(
 )
 
 router.patch(
-  "/updateProfile",
+  "/updateTrainerProfile",
   (req:Request, res:Response,next:NextFunction) =>
     trainerAdapter.updateProfile(req,res,next)
 )
