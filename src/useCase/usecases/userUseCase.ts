@@ -15,9 +15,11 @@ import { getTrainers } from "./user/getTrainers";
 import { getTrainerDetails } from "./user/getTrainerData";
 import { addProfile } from "./user/addProfile";
 import { updateProfile } from "./user/updateProfile";
-import {createPayment } from "./user/createPayment";
+import { createPayment } from "./user/createPayment";
 import { finalConfirmation } from "./user/finalConfirmation";
 import IStripe from "../interface/services/IStripe";
+import { updateHealth } from "./user/updateHealth";
+import { getUser } from "./user/findUser";
 
 
 export class UserUseCase {
@@ -26,14 +28,14 @@ export class UserUseCase {
   private readonly jwt: Ijwt;
   private readonly nodemailer: INodemailer;
   private readonly requestValidator: IRequestValidator;
-  private readonly stripe:IStripe;
+  private readonly stripe: IStripe;
   constructor(
     userRepository: IUserRepository,
     bcrypt: IHashpassword,
     jwt: Ijwt,
     nodemailer: INodemailer,
     requestValidator: IRequestValidator,
-    stripe:IStripe
+    stripe: IStripe
 
   ) {
     this.userRepository = userRepository;
@@ -77,18 +79,18 @@ export class UserUseCase {
     );
   }
 
-  async verifyemail({email,name}:{email:string;name:string}) {
-    return verifyEmail(this.requestValidator,this.nodemailer,email,name);
+  async verifyemail({ email, name }: { email: string; name: string }) {
+    return verifyEmail(this.requestValidator, this.nodemailer, email, name);
   }
 
-  async emailVerification({otp,email}:{otp:string,email:string} ) {
-    return emailVerification(this.requestValidator,this.nodemailer,otp,email);
+  async emailVerification({ otp, email }: { otp: string, email: string }) {
+    return emailVerification(this.requestValidator, this.nodemailer, otp, email);
   }
 
   async sendOtpFogotPassword({ email, name }: { email: string; name: string }) {
-    return sendOtpFogotPassword(this.requestValidator,this.userRepository, this.nodemailer, email, name);
+    return sendOtpFogotPassword(this.requestValidator, this.userRepository, this.nodemailer, email, name);
   }
-  
+
   async forgotPassword({
     email,
     password,
@@ -111,9 +113,9 @@ export class UserUseCase {
     email,
     password,
   }: {
-    name:string;
-    email:string;
-    password:string;
+    name: string;
+    email: string;
+    password: string;
   }) {
     return googleAuth(
       this.requestValidator,
@@ -126,53 +128,79 @@ export class UserUseCase {
     )
   }
 
-  async findAcceptedTrainers(page: number, perPage: number, specialisation: string, language: string, search: string){
+  async findAcceptedTrainers(page: number, perPage: number, specialisation: string, language: string, search: string) {
     return getTrainers(page, perPage, specialisation, language, search);
   }
 
-  async getTrainerDetails(trainerId: string){
+  async getTrainerDetails(trainerId: string) {
     return getTrainerDetails(trainerId);
   }
+
+  async getUser(email: string) {
+    return getUser(email);
+  }
+
 
   async addProfile({
     profile_img,
     _id,
- }: {
- profile_img : string,
- _id : string
- }) {
-   return addProfile(
-     this.requestValidator,
-     this.userRepository,
-     profile_img,
-     _id
-   );
- }
-
- async updateProfile({
-  _id,
-  name,
-  mobile
-}: {
-_id : string,
-name : string,
-mobile : string
-}) {
- return updateProfile(
-   this.requestValidator,
-   this.userRepository,
-   _id,
-   name,
-   mobile
- );
-}
- 
-  async createPayment({amount,email,userId}:{amount:number,email:string,userId:string}){
-    return createPayment(this.stripe,amount,email,userId)
+  }: {
+    profile_img: string,
+    _id: string
+  }) {
+    return addProfile(
+      this.requestValidator,
+      this.userRepository,
+      profile_img,
+      _id
+    );
   }
 
-  async finalConfirmation({email,amount,transactionId,userId}:{email:string,amount:number,transactionId:string,userId:string}){
-    return finalConfirmation(this.userRepository,email,amount,transactionId,userId)
-}
+  async updateProfile({
+    _id,
+    name,
+    mobile
+  }: {
+    _id: string,
+    name: string,
+    mobile: string
+  }) {
+    return updateProfile(
+      this.requestValidator,
+      this.userRepository,
+      _id,
+      name,
+      mobile
+    );
+  }
+
+  async createPayment({ amount, email, userId }: { amount: number, email: string, userId: string }) {
+    return createPayment(this.stripe, amount, email, userId)
+  }
+
+  async finalConfirmation({ email, amount, transactionId, userId }: { email: string, amount: number, transactionId: string, userId: string }) {
+    return finalConfirmation(this.userRepository, email, amount, transactionId, userId)
+  }
+
+
+  async updateHealth({
+    _id,
+    age,
+    weight,
+    height,
+    goal
+  }: {
+    _id: string, age: string, weight: string, height: string, goal: string
+  }) {
+    return updateHealth(
+      this.requestValidator,
+      this.userRepository,
+      _id,
+      age,
+      weight,
+      height,
+      goal
+    )
+  }
 
 }

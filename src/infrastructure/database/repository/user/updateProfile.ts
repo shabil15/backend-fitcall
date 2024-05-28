@@ -11,7 +11,6 @@ export const updateProfile = async (
        console.log("user update")
         const user = await userModels.findOne({ _id: data._id}).select("-password");
         if (user) {
-            // Assuming isStatus is a property on the user model
             user.name = data.name
             user.mobile = data.mobile
             await user.save();

@@ -8,7 +8,7 @@ export interface IUserRepository {
   forgotPassword(newPassword:IforgotPassword): Promise<StoreData>
   addProfile(profile_img:string,_id:string): Promise<IUser | never>;
   updateProfile(data:Record<string,string>): Promise<IUser>;
-  // updateProfile(data:Record<string,string>): Promise<IUser>;
   payment(email:string):Promise<StoreData>;
   paymentData(email:string,amount:number,transactionId:string,userId:string): Promise<paymentDatas>;
+  updateHealth(date:Record<string,string>):Promise<IUser>;
 }

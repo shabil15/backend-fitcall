@@ -33,7 +33,11 @@ export interface IUserResponse<T = IUser| IUser[]|string> {
 }
 
 export interface trainerResponseData extends StoreData{
-  img? : string,
+  mobile?:string,
+  profile_img? : string,
+  language?:string,
+  specialisation?:string,
+  description?: string,
   joinDate? : Date
 }
 
@@ -64,4 +68,5 @@ export interface paymentDatas{
   transactionId?:string;
   userId?:string;
   email?:string;
+  message?:string;
 }

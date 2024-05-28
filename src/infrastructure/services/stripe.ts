@@ -24,6 +24,7 @@ async createPaymentIntent(
                     currency: 'inr',
                     product_data: {
                         name: amount===3999?'Monthly Plan':'Annual Plan',
+                        // images:["https://github.com/shabil15/FITCALL-LOGO/blob/main/Group%20880%20(1).png"]
                     },
                     unit_amount: amount *100,
                 },
@@ -31,7 +32,7 @@ async createPaymentIntent(
             },
         ],
         mode: 'payment',
-        success_url: 'http://localhost:4000/pricing',
+        success_url: 'http://localhost:4000/myplan',
         cancel_url: 'http://localhost:4000',
         metadata: {
             email: email,

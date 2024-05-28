@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import { userAdapter } from "./injections/userinjection";
+import AuthMiddleware from "../Middleware/authMiddleware";
 
 const router = express.Router();
 
@@ -19,8 +20,8 @@ router.post("/verifyEmail", (req: Request, res: Response, next: NextFunction) =>
   userAdapter.emailVerification(req, res, next)
 );
 
-router.post('/googleAuth',(req:Request,res:Response,next:NextFunction)=>
-  userAdapter.googleAuth(req,res,next)
+router.post('/googleAuth', (req: Request, res: Response, next: NextFunction) =>
+  userAdapter.googleAuth(req, res, next)
 )
 
 router.post(
@@ -35,43 +36,55 @@ router.post(
     userAdapter.forgotPassword(req, res, next)
 );
 
- router.post(
+router.post(
   "/logout",
-  (req:Request,res:Response,next:NextFunction) => 
-    userAdapter.logoutUser(req,res,next)
- )
+  (req: Request, res: Response, next: NextFunction) =>
+    userAdapter.logoutUser(req, res, next)
+)
 
- router.get(
+router.get(
   "/getTrainers",
-  (req:Request,res:Response,next:NextFunction) => 
-    userAdapter.getTrainers(req,res,next)
- )
+  (req: Request, res: Response, next: NextFunction) =>
+    userAdapter.getTrainers(req, res, next)
+)
 
- router.get(
+router.get(
   "/trainers/profile",
-  (req:Request,res:Response,next:NextFunction) =>
-    userAdapter.getTrainerDetails(req,res,next)
- )
+  (req: Request, res: Response, next: NextFunction) =>
+    userAdapter.getTrainerDetails(req, res, next)
+)
 
- router.patch("/addProfile",
- (req: Request, res: Response, next: NextFunction) =>
-  userAdapter.addProfile(req, res, next)
+router.patch("/addProfile", AuthMiddleware.protectUser,
+  (req: Request, res: Response, next: NextFunction) =>
+    userAdapter.addProfile(req, res, next)
 );
 
-router.patch("/updateProfile",
- (req: Request, res: Response, next: NextFunction) =>
-  userAdapter.updateProfile(req, res, next)
+router.patch("/updateProfile", 
+  (req: Request, res: Response, next: NextFunction) =>
+    userAdapter.updateProfile(req, res, next)
 );
 
-router.post('/payment',(req:Request,res:Response,next:NextFunction)=>{
-  userAdapter.payment(req,res,next)
+router.post('/payment', 
+ (req: Request, res: Response, next: NextFunction) => {
+  userAdapter.payment(req, res, next)
 })
 
 
-router.post('/webhook',(req:Request,res:Response,next:NextFunction)=>{
-  userAdapter.webhook(req,res,next)
+router.post('/webhook', 
+ (req: Request, res: Response, next: NextFunction) => {
+  userAdapter.webhook(req, res, next)
 })
 
+router.patch('/updateHealth', AuthMiddleware.protectUser,
+  (req: Request, res: Response, next: NextFunction) => {
+    userAdapter.updateHealth(req, res, next)
+  })
 
- 
+router.get(
+  "/getUser",
+  (req: Request, res: Response, next: NextFunction) =>
+    userAdapter.getUser(req, res, next)
+)
+
+
 export default router;

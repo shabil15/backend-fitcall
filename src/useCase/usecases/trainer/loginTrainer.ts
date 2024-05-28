@@ -53,8 +53,12 @@ export const loginTrainer = async(
         const responseData : trainerResponseData = {
           _id:trainer._id,
           name:trainer.name,
+          mobile:trainer.mobile,
           email:trainer.email,
-          img:trainer.profile_img,
+          profile_img:trainer.profile_img,
+          language:trainer.language,
+          specialisation:trainer.specialisation,
+          description: trainer.description,
           joinDate:trainer.createdAt
         };
         return {

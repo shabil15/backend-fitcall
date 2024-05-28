@@ -8,10 +8,6 @@ export const payment = async (
     try {
         const user = await userModels.findOne({email:email}).select("-password");
         if(user) {
-           user.isSubscribed = true;
-
-           await user.save()
-           
            const responseData = {
             _id:user._id,
             name:user.name,

@@ -10,6 +10,7 @@ import { addProfile } from "./user/addProfile";
 import { updateProfile } from "./user/updateProfile";
 import { payment } from "./user/payment";
 import { paymentData } from "./payment/paymentData";
+import { updateHealth } from "./user/updateHealth";
 
 
 export class UserRepository implements IUserRepository {
@@ -47,5 +48,9 @@ async paymentData(email:string,amount:number,transactionId:string,userId:string)
   return paymentData(email,amount,transactionId,userId,this.usersModel);
 
 }
- 
+
+async updateHealth(data: Record<string, string>): Promise<IUser | never> {
+  return updateHealth(data,this.usersModel)
+}
+
 }

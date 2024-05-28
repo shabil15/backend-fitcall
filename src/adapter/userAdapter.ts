@@ -217,9 +217,6 @@ export class UserAdapter {
         const payment = await this.userusecase.createPayment(req.body)
 
 
-        // console.log('the payment status in controller is :', payment)
-
-
         res.status(payment.status).json({
             data: payment.data,
 
@@ -285,6 +282,38 @@ async webhook(req: Req, res: Res, next: Next) {
     } catch (error) {
         next(error);
     }
+}
+
+async updateHealth(req: Req, res: Res, next: Next) {
+  try {
+    const user = await this.userusecase.updateHealth(req.body);
+    user &&
+    res.status(user.status).json({
+      success: user.success,
+      message: user.message,
+      user: user.data,
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
+async getUser(req:Req,res:Res,next:Next) {
+  try{
+    const {email} = req.query;
+    if (typeof email === 'string') {
+      const trainer = await this.userusecase.getUser(email);
+      trainer && 
+      res.status(trainer.status).json({
+        success:trainer.success,
+        data:trainer.data
+      });
+    } else {
+      res.status(400).json({ success: false, message: 'Invalid id' });
+    }
+  }catch(error){
+    next(error);
+  } 
 }
 
 }

@@ -1,3 +1,5 @@
+import { ISubscription } from "./subscription";
+
 export interface IUser {
   _id?: string;
   name: string;
@@ -7,9 +9,10 @@ export interface IUser {
   profile_img?: string;
   isBlocked?: boolean;
   isSubscribed?: boolean;
-  subscriptionPlan?: string; 
-  subscriptionStart?: Date;
-  subscriptionEnd?: Date;
-  paymentId?: string; 
+  subscriptions?: ISubscription[];
   trainerId?: string; 
+  age?:string; 
+  height?: string; 
+  weight?: string;
+  goal?: string;
 }

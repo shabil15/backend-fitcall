@@ -1,5 +1,7 @@
 import mongoose, { Document, Model, Schema } from "mongoose";
 import { IUser } from "../../../domain/user";
+import { subscriptionSchema } from "./subscriptionModel";
+import { ISubscription } from "../../../domain/subscription";
 
 const userSchema: Schema = new Schema<IUser & Document>(
   {
@@ -10,11 +12,12 @@ const userSchema: Schema = new Schema<IUser & Document>(
     profile_img: { type: String, default: "" },
     isBlocked: { type: Boolean, default: false },
     isSubscribed:{type:Boolean, default: false},
-    subscriptionPlan: { type: String, enum: ["Monthly", "Annual"], default: null },
-    subscriptionStart: { type: Date, default: null },
-    subscriptionEnd: { type: Date, default: null },
+    subscriptions: { type: [subscriptionSchema], default: [] },
     trainerId: { type: String, default: null },
-    paymentId: { type: String, default: null },
+    age:{type:String,default:""},
+    height:{type:String,default:""},
+    weight:{type:String,default:""},
+    goal:{type:String,default:""},
   },
   {
     timestamps: true,
