@@ -298,6 +298,21 @@ async updateHealth(req: Req, res: Res, next: Next) {
   }
 }
 
+async setTrainer(req: Req, res: Res, next: Next) {
+  try {
+    const user = await this.userusecase.setTrainer(req.body);
+    user &&
+    res.status(user.status).json({
+      success: user.success,
+      message: user.message,
+      user: user.data,
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
+
 async getUser(req:Req,res:Res,next:Next) {
   try{
     const {email} = req.query;

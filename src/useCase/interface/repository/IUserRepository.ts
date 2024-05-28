@@ -10,5 +10,6 @@ export interface IUserRepository {
   updateProfile(data:Record<string,string>): Promise<IUser>;
   payment(email:string):Promise<StoreData>;
   paymentData(email:string,amount:number,transactionId:string,userId:string): Promise<paymentDatas>;
-  updateHealth(date:Record<string,string>):Promise<IUser>;
+  updateHealth(data:Record<string,string>):Promise<IUser>;
+  setTrainer(data:Record<string,string>):Promise<IUser>;
 }

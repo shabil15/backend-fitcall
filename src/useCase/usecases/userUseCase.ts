@@ -20,6 +20,7 @@ import { finalConfirmation } from "./user/finalConfirmation";
 import IStripe from "../interface/services/IStripe";
 import { updateHealth } from "./user/updateHealth";
 import { getUser } from "./user/findUser";
+import { setTrainer } from "./user/setTrainer";
 
 
 export class UserUseCase {
@@ -202,5 +203,19 @@ export class UserUseCase {
       goal
     )
   }
+
+  async setTrainer({
+    userId,trainerId
+  }: {
+    userId:string,trainerId:string
+  }) {
+    return setTrainer(
+      this.requestValidator,
+      this.userRepository,
+      userId,
+      trainerId,
+    )
+  }
+
 
 }

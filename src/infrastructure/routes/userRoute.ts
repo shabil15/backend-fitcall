@@ -87,4 +87,10 @@ router.get(
 )
 
 
+router.patch(
+  "/setTrainer",
+  (req:Request,res:Response,next:NextFunction) => 
+    userAdapter.setTrainer(req,res,next)
+)
+
 export default router;
