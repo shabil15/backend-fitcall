@@ -11,7 +11,6 @@ import checkSubscription from "../services/checkSubscription";
 
 dotenv.config();
 export const app = express();
-checkSubscription();
 
 app.use(cors());
 app.use(cookieParser());
@@ -27,3 +26,4 @@ app.use("/api/trainer", trainerRouter);
 
 
 app.use(errorHandler);
+checkSubscription();

@@ -9,6 +9,7 @@ const subscriptionSchema: Schema<ISubscription & Document> = new Schema(
     end: { type: Date, required: true },
     paymentId: { type: String, required: true },
     amount: { type: Number, required: true },
+    isActive:{type:Boolean,default:false},
   },
   { _id: false } 
 );

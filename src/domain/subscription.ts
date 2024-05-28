@@ -4,4 +4,5 @@ export interface ISubscription {
     end: Date;
     paymentId: string;
     amount: number;
+    isActive:boolean;
   }
