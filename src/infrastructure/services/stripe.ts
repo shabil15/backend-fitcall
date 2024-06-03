@@ -24,7 +24,7 @@ async createPaymentIntent(
                     currency: 'inr',
                     product_data: {
                         name: amount===3999?'Monthly Plan':'Annual Plan',
-                        // images:["https://github.com/shabil15/FITCALL-LOGO/blob/main/Group%20880%20(1).png"]
+                        images:["https://github.com/shabil15/FITCALL-LOGO/blob/main/Group%20880%20(1).png"]
                     },
                     unit_amount: amount *100,
                 },

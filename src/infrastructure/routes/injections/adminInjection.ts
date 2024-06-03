@@ -13,7 +13,7 @@ import TrainerModel from "../../database/model/trainerModel";
 
 const userRepository = new UserRepository(UserModel);
 const adminRepository = new AdminRepository(AdminModel);
-const trainerRepository = new TrainerRepository(TrainerModel)
+const trainerRepository = new TrainerRepository(TrainerModel,UserModel)
 const bcrypt = new Encrypt();
 const jwt = new JwtPassword();
 const nodemailer = new Nodemailer();

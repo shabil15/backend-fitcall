@@ -6,6 +6,7 @@ import { createTrainer } from "./trainer/createTrainer";
 import { loginTrainer } from "./trainer/loginTrainer";
 import { updateProfile } from "./trainer/updateProfile";
 import { addProfile } from "./trainer/addProfile";
+import { IUser } from "../../domain/user";
 
 export class TrainerUseCase {
   private readonly trainerRepository: ITrainerRepository;
@@ -106,5 +107,9 @@ export class TrainerUseCase {
      _id
    );
  }
+
+ async getClients(trainerId: string): Promise<IUser[]> {
+  return await this.trainerRepository.getClients(trainerId);
+}
    
 }

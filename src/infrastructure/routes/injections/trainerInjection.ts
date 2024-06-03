@@ -1,12 +1,13 @@
 import { TrainerAdapter } from "../../../adapter/trainerAdapter";
 import { TrainerUseCase } from "../../../useCase/usecases/trainerUseCase";
 import TrainerModel from "../../database/model/trainerModel";
+import UserModel from "../../database/model/userModel";
 import { TrainerRepository } from "../../database/repository/trainerRepository";
 import Encrypt from "../../services/bcrypt";
 import JwtPassword from "../../services/jwt";
 import RequestValidator from "../../services/validateRepository";
 
-const traierRepository = new TrainerRepository(TrainerModel);
+const traierRepository = new TrainerRepository(TrainerModel,UserModel);
 const bcrypt = new Encrypt();
 const jwt = new JwtPassword();
 const requestValidator = new RequestValidator();

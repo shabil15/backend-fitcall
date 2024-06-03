@@ -1,5 +1,6 @@
 import express ,{NextFunction,Request,Response}  from 'express';
 import { trainerAdapter } from './injections/trainerInjection';
+import { Next } from '../types/expressTypes';
 
 const router = express.Router();
 
@@ -27,11 +28,16 @@ router.patch(
     trainerAdapter.updateProfile(req,res,next)
 )
 
-
 router.patch(
   "/addProfile",
   (req:Request, res:Response, next:NextFunction) =>
     trainerAdapter.addProfile(req,res,next)
+)
+
+router.post(
+  "/getClients",
+  (req:Request,res:Response,next:NextFunction) => 
+    trainerAdapter.getClients(req,res,next)
 )
 
 export default router
