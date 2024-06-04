@@ -12,6 +12,7 @@ import { payment } from "./user/payment";
 import { paymentData } from "./payment/paymentData";
 import { updateHealth } from "./user/updateHealth";
 import { setTrainer } from "./user/setTrainer";
+import { findById } from "./user/findById";
 
 
 export class UserRepository implements IUserRepository {
@@ -57,4 +58,11 @@ export class UserRepository implements IUserRepository {
   async setTrainer(data: Record<string, string>): Promise<IUser | never> {
     return setTrainer(data, this.usersModel)
   }
+
+   async findById(userId: string): Promise<IUser | null> {
+    return findById(userId,this.usersModel);  
+  }
+
+  
+  
 }

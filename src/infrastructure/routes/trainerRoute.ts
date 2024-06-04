@@ -40,4 +40,7 @@ router.post(
     trainerAdapter.getClients(req,res,next)
 )
 
+
+
+
 export default router

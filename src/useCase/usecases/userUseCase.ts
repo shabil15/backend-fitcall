@@ -21,6 +21,7 @@ import IStripe from "../interface/services/IStripe";
 import { updateHealth } from "./user/updateHealth";
 import { getUser } from "./user/findUser";
 import { setTrainer } from "./user/setTrainer";
+import { getSubscription } from "./user/getSubscriptions";
 
 
 export class UserUseCase {
@@ -215,6 +216,10 @@ export class UserUseCase {
       userId,
       trainerId,
     )
+  }
+
+  async getSubscription(userId:string){
+    return getSubscription(userId)
   }
 
 

@@ -93,4 +93,8 @@ router.patch(
     userAdapter.setTrainer(req,res,next)
 )
 
+router.get("/subscriptionHistory/:userId", (req, res, next) =>
+  userAdapter.getSubscription(req, res, next)
+);
+
 export default router;

@@ -13,16 +13,16 @@ export class UserAdapter {
       const newUser = await this.userusecase.createUser(req.body);
       newUser &&
 
-      res.cookie("userjwt", newUser.token, {
-        httpOnly: true,
-        sameSite: "strict", 
-        maxAge: 30 * 24 * 60 * 60 * 1000,   
-      });
-
-        res.status(newUser.status).json({
-          success: newUser.success,
-          message: newUser.message,
+        res.cookie("userjwt", newUser.token, {
+          httpOnly: true,
+          sameSite: "strict",
+          maxAge: 30 * 24 * 60 * 60 * 1000,
         });
+
+      res.status(newUser.status).json({
+        success: newUser.success,
+        message: newUser.message,
+      });
     } catch (error) {
       next(error);
     }
@@ -58,17 +58,17 @@ export class UserAdapter {
       const user = await this.userusecase.loginUser(req.body);
       user &&
 
-      res.cookie("userjwt", user.token, {
-        httpOnly: true,
-        sameSite: "strict", 
-        maxAge: 30 * 24 * 60 * 60 * 1000, 
-      });
-
-        res.status(user.status).json({
-          success: user.success,
-          data: user.data,
-          message: user.message,
+        res.cookie("userjwt", user.token, {
+          httpOnly: true,
+          sameSite: "strict",
+          maxAge: 30 * 24 * 60 * 60 * 1000,
         });
+
+      res.status(user.status).json({
+        success: user.success,
+        data: user.data,
+        message: user.message,
+      });
     } catch (error) {
       next(error);
     }
@@ -106,9 +106,9 @@ export class UserAdapter {
     }
   }
 
-  async forgotPassword(req:Req,res:Res,next: Next) {
+  async forgotPassword(req: Req, res: Res, next: Next) {
     try {
-      const newUser= await this.userusecase.forgotPassword(req.body)
+      const newUser = await this.userusecase.forgotPassword(req.body)
       newUser &&
         res.cookie("userjwt", newUser.token, {
           httpOnly: true,
@@ -126,67 +126,67 @@ export class UserAdapter {
     }
   }
 
-  async logoutUser(req:Req,res:Res,next:Next) {
+  async logoutUser(req: Req, res: Res, next: Next) {
     try {
-      res.cookie("jwt","",{
-        httpOnly:true,
-        expires:new Date(0),
+      res.cookie("jwt", "", {
+        httpOnly: true,
+        expires: new Date(0),
       });
-      res.status(200).json({message:"Logged out successfully"});
+      res.status(200).json({ message: "Logged out successfully" });
     } catch (error) {
       next(error)
     }
   }
 
-  async getTrainers(req:Req,res:Res,next:Next) {
+  async getTrainers(req: Req, res: Res, next: Next) {
     try {
       console.log("getTraienrs");
       const { page = 1, per_page = 4, specialisation, language, search } = req.query;
-      
+
       const trainers = await this.userusecase.findAcceptedTrainers(+page,
         +per_page,
         specialisation?.toString() || "", // Provide default value if specialisation is undefined
         language?.toString() || "", // Provide default value if language is undefined
         search?.toString() || "" // Provide default value if search is undefined);
       )
-      trainers && 
-      res.status(trainers.status).json({
-        success:trainers.success,
-        data:trainers.data,
-        total:trainers.total
-      })
+      trainers &&
+        res.status(trainers.status).json({
+          success: trainers.success,
+          data: trainers.data,
+          total: trainers.total
+        })
     } catch (error) {
       next(error)
     }
   }
 
-  async getTrainerDetails(req:Req,res:Res,next:Next) {
-    try{
-      const {id} = req.query;
+  async getTrainerDetails(req: Req, res: Res, next: Next) {
+    try {
+      const { id } = req.query;
       if (typeof id === 'string') {
         const trainer = await this.userusecase.getTrainerDetails(id);
-        trainer && 
-        res.status(trainer.status).json({
-          success:trainer.success,
-          data:trainer.data
-        });
+        trainer &&
+          res.status(trainer.status).json({
+            success: trainer.success,
+            data: trainer.data
+          });
       } else {
         res.status(400).json({ success: false, message: 'Invalid id' });
       }
-    }catch(error){
+    } catch (error) {
       next(error);
-    } 
+    }
   }
 
   async addProfile(req: Req, res: Res, next: Next) {
     try {
       const user = await this.userusecase.addProfile(req.body);
       user &&
-      res.status(user.status).json({
-        success: user.success,
-        message: user.message,
-        user: user.data,
-      });
+        res.status(user.status).json({
+          success: user.success,
+          message: user.message,
+          user: user.data,
+        });
     } catch (err) {
       next(err);
     }
@@ -197,11 +197,11 @@ export class UserAdapter {
     try {
       const user = await this.userusecase.updateProfile(req.body);
       user &&
-      res.status(user.status).json({
-        success: user.success,
-        message: user.message,
-        user: user.data,
-      });
+        res.status(user.status).json({
+          success: user.success,
+          message: user.message,
+          user: user.data,
+        });
     } catch (err) {
       next(err);
     }
@@ -212,123 +212,144 @@ export class UserAdapter {
 
     try {
 
-        console.log('payment entered')
+      console.log('payment entered')
 
-        const payment = await this.userusecase.createPayment(req.body)
+      const payment = await this.userusecase.createPayment(req.body)
 
 
-        res.status(payment.status).json({
-            data: payment.data,
+      res.status(payment.status).json({
+        data: payment.data,
 
-        })
+      })
 
 
     } catch (error) {
-        // console.log('the payment controller error is ', error)
-        next(error)
+      // console.log('the payment controller error is ', error)
+      next(error)
 
     }
-}
+  }
 
 
 
-async webhook(req: Req, res: Res, next: Next) {
+  async webhook(req: Req, res: Res, next: Next) {
 
     try {
 
-        let transactionId;
+      let transactionId;
 
-        // Parse the incoming webhook event
-        const event = req.body;
+      // Parse the incoming webhook event
+      const event = req.body;
       console.log('Webhook entered');
-        console.log('webhook evemt',event);
+      console.log('webhook evemt', event);
 
-        // Check the type of event
-        switch (event.type) {
-
-
-            case 'checkout.session.completed':
-                // Handle charge succeeded event
-                const session = event.data.object;
-                const metadata = session.metadata;
-                const email = metadata.email;
-                const userId = metadata.userId;
-                const amount = metadata.amount;
-
-                // console.log('the session is :', session)
+      // Check the type of event
+      switch (event.type) {
 
 
+        case 'checkout.session.completed':
+          // Handle charge succeeded event
+          const session = event.data.object;
+          const metadata = session.metadata;
+          const email = metadata.email;
+          const userId = metadata.userId;
+          const amount = metadata.amount;
 
-                transactionId = event.data.object.payment_intent;
-
-                // console.log('The transaction id is :', transactionId);
-
-                await this.userusecase.finalConfirmation({ email, amount, transactionId, userId })
-
-
-                break;
+          // console.log('the session is :', session)
 
 
 
-            default:
-                console.log(`Unhandled event type: ${event.type}`);
-        }
+          transactionId = event.data.object.payment_intent;
+
+          // console.log('The transaction id is :', transactionId);
+
+          await this.userusecase.finalConfirmation({ email, amount, transactionId, userId })
 
 
-        
+          break;
 
-        // Respond with a success message
-        res.status(200).json({ received: true });
+
+
+        default:
+          console.log(`Unhandled event type: ${event.type}`);
+      }
+
+
+
+
+      // Respond with a success message
+      res.status(200).json({ received: true });
     } catch (error) {
-        next(error);
+      next(error);
     }
-}
-
-async updateHealth(req: Req, res: Res, next: Next) {
-  try {
-    const user = await this.userusecase.updateHealth(req.body);
-    user &&
-    res.status(user.status).json({
-      success: user.success,
-      message: user.message,
-      user: user.data,
-    });
-  } catch (err) {
-    next(err);
   }
-}
 
-async setTrainer(req: Req, res: Res, next: Next) {
-  try {
-    const user = await this.userusecase.setTrainer(req.body);
-    user &&
-    res.status(user.status).json({
-      success: user.success,
-      message: user.message,
-      user: user.data,
-    });
-  } catch (err) {
-    next(err);
-  }
-}
-
-
-async getUser(req:Req,res:Res,next:Next) {
-  try{
-    const {email} = req.query;
-    if (typeof email === 'string') {
-      const trainer = await this.userusecase.getUser(email);
-      trainer && 
-      res.status(trainer.status).json({
-        success:trainer.success,
-        data:trainer.data
-      });
-    } else {
-      res.status(400).json({ success: false, message: 'Invalid id' });
+  async updateHealth(req: Req, res: Res, next: Next) {
+    try {
+      const user = await this.userusecase.updateHealth(req.body);
+      user &&
+        res.status(user.status).json({
+          success: user.success,
+          message: user.message,
+          user: user.data,
+        });
+    } catch (err) {
+      next(err);
     }
-  }catch(error){
-    next(error);
-  } 
-}
+  }
+
+  async setTrainer(req: Req, res: Res, next: Next) {
+    try {
+      const user = await this.userusecase.setTrainer(req.body);
+      user &&
+        res.status(user.status).json({
+          success: user.success,
+          message: user.message,
+          user: user.data,
+        });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+
+  async getUser(req: Req, res: Res, next: Next) {
+    try {
+      const { email } = req.query;
+      if (typeof email === 'string') {
+        const trainer = await this.userusecase.getUser(email);
+        trainer &&
+          res.status(trainer.status).json({
+            success: trainer.success,
+            data: trainer.data
+          });
+      } else {
+        res.status(400).json({ success: false, message: 'Invalid id' });
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+
+
+  async getSubscription(req:Req,res:Res,next:Next){
+    try {
+      const {userId}  = req.params;
+      if(!userId) {
+        res.status(400).json({message:"User ID is required"});
+        return;
+      }
+
+      const subscriptions = await this.userusecase.getSubscription(userId);
+      if(!subscriptions || subscriptions.length === 0) {
+        res.status(404).json({message:"No subscriptions found"});
+        return;
+      }
+      subscriptions.sort((a, b) => new Date(b.start).getTime() - new Date(a.start).getTime());
+      res.status(200).json(subscriptions);
+    } catch (error) {
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
 
 }

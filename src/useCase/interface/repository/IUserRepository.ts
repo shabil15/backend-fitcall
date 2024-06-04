@@ -12,4 +12,5 @@ export interface IUserRepository {
   paymentData(email:string,amount:number,transactionId:string,userId:string): Promise<paymentDatas>;
   updateHealth(data:Record<string,string>):Promise<IUser>;
   setTrainer(data:Record<string,string>):Promise<IUser>;
+  findById(userId: string): Promise<IUser | null>;
 }
