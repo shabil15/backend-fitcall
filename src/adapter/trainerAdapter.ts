@@ -109,7 +109,21 @@ export class TrainerAdapter{
     }
   }
 
-
+  async addDescription(req:Req, res:Res, next:Next) {
+    try {
+      const {trainerId} = req.params;
+      const { description } = req.body;
+      const trainer = await this.trainerusecase.addDescription(trainerId,description); 
+      trainer && 
+        res.status(trainer.status).json({
+          success:trainer.success,
+          trainer:trainer.data,
+          message:trainer.message,
+        })
+    } catch (error) {
+      res.status(500).json({message:"Internal Server Error"})
+    }
+  }
 
   
 

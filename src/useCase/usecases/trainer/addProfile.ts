@@ -12,7 +12,7 @@ export const addProfile = async (
 ): Promise<ITrainerResponse> => {
   try {
     
-    const validation = requestValidator.validateRequiredFields(
+    const validation =await requestValidator.validateRequiredFields(
       {profile_img,_id },
       [ "profile_img", "_id"]
     );

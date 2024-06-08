@@ -40,6 +40,11 @@ router.post(
     trainerAdapter.getClients(req,res,next)
 )
 
+router.patch(
+  "/addDescription/:trainerId",
+  (req:Request,res:Response,next:NextFunction)=> 
+    trainerAdapter.addDescription(req,res,next)
+)
 
 
 

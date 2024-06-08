@@ -53,7 +53,7 @@ export interface RequesEmailData{
   email: string;
 }
 
-export interface ITrainerResponse<T = ITrainer| ITrainer[]|string> {
+export interface ITrainerResponse<T = string | ITrainer | ITrainer[] | null>{
   status: number;
   success: boolean;
   message?: string;

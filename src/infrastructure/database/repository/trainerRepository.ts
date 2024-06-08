@@ -11,6 +11,7 @@ import { addProfile } from "./trainer/addProfile";
 import { IUser } from "../../../domain/user";
 import UserModel from "../model/userModel";
 import { getClients } from "./trainer/getClients";
+import { addDescription } from "./trainer/addDescription";
 
 export class TrainerRepository implements ITrainerRepository {
   constructor(private readonly trainerModel: typeof TrainerModel, private readonly userModel: typeof UserModel) { }
@@ -40,6 +41,10 @@ export class TrainerRepository implements ITrainerRepository {
   }
   async getClients(trainerId: string): Promise<IUser[]> {
     return getClients(trainerId, this.userModel)
+  }
+
+  async addDescription(userId: string, description: string): Promise<ITrainer | null> {
+    return addDescription(userId,description,this.trainerModel);
   }
 
 }
