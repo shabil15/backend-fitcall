@@ -4,16 +4,16 @@ import { IRequestValidator } from "../../interface/repository/IValidRepository"
 import { ITrainerResponse } from "../../interface/services/Iresponse"
 
 
-export const addDescription = async (
+export const addExperience = async (
     requestValidator: IRequestValidator,
     trainerRepository: ITrainerRepository,
     trainerId: string,
-    description: string,
+    experience: string,
 ): Promise<ITrainerResponse> => {
     try {
         const validation = await requestValidator.validateRequiredFields(
-            { trainerId, description },
-            ["trainerId", "description"]
+            { trainerId, experience },
+            ["trainerId", "experience"]
         );
 
         if (!validation.success) {
@@ -22,12 +22,12 @@ export const addDescription = async (
         }
 
 
-        const updatedTrainer = await trainerRepository.addDescription(trainerId, description);
+        const updatedTrainer = await trainerRepository.addExperience(trainerId, experience);
 
         return {
             status: 200,
             success: true,
-            message: `Trainer Description Updated successfully`,
+            message: `Trainer Experience Updated successfully`,
             data: updatedTrainer,
         }
 

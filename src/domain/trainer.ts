@@ -12,4 +12,5 @@ export interface ITrainer {
   status?: string;
   isBlocked?: boolean;
   createdAt?: Date;
+  experience?:string;
 }

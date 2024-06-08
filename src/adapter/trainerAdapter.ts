@@ -125,6 +125,23 @@ export class TrainerAdapter{
     }
   }
 
+  async addExperience(req:Req, res:Res, next:Next) {
+    try {
+      const {trainerId} = req.params;
+      const { experience } = req.body;
+      console.log("trainer",trainerId,experience);
+      const trainer = await this.trainerusecase.addExperience(trainerId,experience); 
+      trainer && 
+        res.status(trainer.status).json({
+          success:trainer.success,
+          trainer:trainer.data,
+          message:trainer.message,
+        })
+    } catch (error) {
+      res.status(500).json({message:"Internal Server Error"})
+    }
+  }
+
   
 
 }

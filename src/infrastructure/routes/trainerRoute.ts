@@ -46,6 +46,10 @@ router.patch(
     trainerAdapter.addDescription(req,res,next)
 )
 
-
+router.patch(
+  "/addExperience/:trainerId",
+  (req:Request,res:Response,next:NextFunction)=> 
+    trainerAdapter.addExperience(req,res,next)
+)
 
 export default router

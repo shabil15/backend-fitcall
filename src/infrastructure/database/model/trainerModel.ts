@@ -15,6 +15,7 @@ const trainerSchema: Schema = new Schema<ITrainer & Document>(
     certificate: { type: String, default: "" },
     status: { type: String, default: "pending" },
     isBlocked: { type: Boolean, default: false },
+    experience: { type: String, default: "" },
   },
   {
     timestamps: true,

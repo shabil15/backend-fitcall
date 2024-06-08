@@ -11,4 +11,5 @@ export interface ITrainerRepository {
   addProfile(profile_img:string,_id:string):Promise<ITrainer|never>;
   getClients(trainerId: string): Promise<IUser[]>;
   addDescription(trainerId:string,description:string):Promise<ITrainer | null>;
+  addExperience(trainerId:string,experience:string):Promise<ITrainer | null>;
 }

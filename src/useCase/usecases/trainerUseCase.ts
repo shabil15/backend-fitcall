@@ -8,6 +8,7 @@ import { updateProfile } from "./trainer/updateProfile";
 import { addProfile } from "./trainer/addProfile";
 import { IUser } from "../../domain/user";
 import {addDescription} from './trainer/addDescription';
+import { addExperience } from "./trainer/addExperience";
 
 export class TrainerUseCase {
   private readonly trainerRepository: ITrainerRepository;
@@ -117,5 +118,7 @@ async addDescription(trainerId: string, description:string) {
   return addDescription(this.requestValidator,this.trainerRepository, trainerId, description)
 }
 
-   
+async addExperience(trainerId: string, experience:string) {
+  return addExperience(this.requestValidator,this.trainerRepository, trainerId, experience)
+}
 }
