@@ -62,7 +62,7 @@ export class TrainerAdapter{
       trainer && 
       res.status(trainer.status).json({
         success:trainer.success,
-        data:trainer.data,
+        trainer:trainer.data,
         message:trainer.message,
       })
     } catch (error) {
@@ -77,7 +77,7 @@ export class TrainerAdapter{
         trainer && 
         res.status(trainer.status).json({
           success:trainer.success,
-          data:trainer.data,
+          trainer:trainer.data,
           message:trainer.message,
         })
     } catch (error) {
