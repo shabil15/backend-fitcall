@@ -22,7 +22,9 @@ import { updateHealth } from "./user/updateHealth";
 import { getUser } from "./user/findUser";
 import { setTrainer } from "./user/setTrainer";
 import { getSubscription } from "./user/getSubscriptions";
-
+import { updateDiet } from "./user/updateDiet";
+import { IDiet } from "../../domain/diet";
+import { addTestRes } from "./user/addTestRes";
 
 export class UserUseCase {
   private readonly userRepository: IUserRepository;
@@ -206,9 +208,9 @@ export class UserUseCase {
   }
 
   async setTrainer({
-    userId,trainerId
+    userId, trainerId
   }: {
-    userId:string,trainerId:string
+    userId: string, trainerId: string
   }) {
     return setTrainer(
       this.requestValidator,
@@ -218,9 +220,28 @@ export class UserUseCase {
     )
   }
 
-  async getSubscription(userId:string){
+  async getSubscription(userId: string) {
     return getSubscription(userId)
   }
 
+  async updateDiet(userId: string, diet: IDiet) {
+    return updateDiet(this.requestValidator,
+      this.userRepository, userId, diet)
+  }
+
+  async addTestRes({
+    testResult,
+    _id,
+  }: {
+    testResult: string,
+    _id: string
+  }) {
+    return addTestRes(
+      this.requestValidator,
+      this.userRepository,
+      testResult,
+      _id
+    );
+  }
 
 }

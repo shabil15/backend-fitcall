@@ -1,3 +1,4 @@
+import { IDiet } from "./diet";
 import { ISubscription } from "./subscription";
 
 export interface IUser {
@@ -15,4 +16,6 @@ export interface IUser {
   height?: string; 
   weight?: string;
   goal?: string;
+  diet?:IDiet;
+  testResult?:string;
 }

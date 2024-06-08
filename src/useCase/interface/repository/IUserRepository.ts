@@ -1,5 +1,6 @@
 import { IUser } from "../../../domain/user";
 import { IforgotPassword,StoreData,paymentDatas } from "../services/Iresponse";
+import { IDiet } from "../../../domain/diet";
 
 export interface IUserRepository {
   createUser(newUser: IUser): Promise<IUser>;
@@ -13,4 +14,6 @@ export interface IUserRepository {
   updateHealth(data:Record<string,string>):Promise<IUser>;
   setTrainer(data:Record<string,string>):Promise<IUser>;
   findById(userId: string): Promise<IUser | null>;
+  updateDiet(userId:string,diet:IDiet):Promise<IUser | null>;
+  addTestRes(testResult:string,_id:string): Promise<IUser | never>;
 }
