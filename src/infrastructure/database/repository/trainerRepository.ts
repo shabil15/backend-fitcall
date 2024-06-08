@@ -42,5 +42,4 @@ export class TrainerRepository implements ITrainerRepository {
     return getClients(trainerId, this.userModel)
   }
 
-
 }

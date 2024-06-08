@@ -352,4 +352,29 @@ export class UserAdapter {
     }
   }
 
+
+  async updateDiet(req:Req, response:Res, next:Next) {
+    try {
+      const {userId} = req.params;
+      const { morning, noon, evening, night, additionalInstructions } = req.body;
+      await this.userusecase.updateDiet(userId, { morning, noon, evening, night, additionalInstructions}); 
+      response.status(200).json({ message: 'Diet updated successfully' });
+    } catch (error) {
+      response.status(500).json({message:"Internal Server Error"})
+    }
+  }
+
+  async addTestRes(req: Req, res: Res, next: Next) {
+    try {
+      const user = await this.userusecase.addTestRes(req.body);
+      user &&
+        res.status(user.status).json({
+          success: user.success,
+          message: user.message,
+          user: user.data,
+        });
+    } catch (err) {
+      next(err);
+    }
+  }
 }

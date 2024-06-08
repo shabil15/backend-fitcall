@@ -1,6 +1,7 @@
 import mongoose, { Document, Model, Schema } from "mongoose";
 import { ITrainer } from "../../../domain/trainer";
 
+
 const trainerSchema: Schema = new Schema<ITrainer & Document>(
   {
     name: { type: String, required: true },

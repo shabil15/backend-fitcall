@@ -13,6 +13,9 @@ import { paymentData } from "./payment/paymentData";
 import { updateHealth } from "./user/updateHealth";
 import { setTrainer } from "./user/setTrainer";
 import { findById } from "./user/findById";
+import { IDiet } from "../../../domain/diet";
+import { updateDiet } from "./user/updateDiet";
+import { addTestRes } from "./user/addTestRes";
 
 
 export class UserRepository implements IUserRepository {
@@ -62,7 +65,13 @@ export class UserRepository implements IUserRepository {
    async findById(userId: string): Promise<IUser | null> {
     return findById(userId,this.usersModel);  
   }
-
   
+   async updateDiet(userId: string, diet: IDiet): Promise<IUser | null> {
+    return updateDiet(userId,diet,this.usersModel);
+  }
+
+  async addTestRes(testResult: string, _id: string): Promise<IUser | never> {
+    return addTestRes(_id, testResult, this.usersModel)
+  }
   
 }

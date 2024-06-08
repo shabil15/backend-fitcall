@@ -1,5 +1,6 @@
 import { IUser } from "../../../domain/user";
 import { ITrainer } from "../../../domain/trainer";
+import { IDiet } from "../../../domain/diet";
 
 
 // export interface Response<T = IUser| IUser[]|string> {
@@ -24,7 +25,7 @@ export interface IResponse<T = StoreData | string> {
   token? : string
 }
 
-export interface IUserResponse<T = IUser| IUser[]|string> {
+export interface IUserResponse<T = IUser| IUser[]|string | IDiet> {
   status: number;
   success: boolean;
   message?: string;

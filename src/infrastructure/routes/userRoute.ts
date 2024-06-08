@@ -97,4 +97,17 @@ router.get("/subscriptionHistory/:userId", (req, res, next) =>
   userAdapter.getSubscription(req, res, next)
 );
 
+router.put(
+  "/update-diet/:userId",
+  (req:Request,res:Response,next:NextFunction)=> 
+    userAdapter.updateDiet(req,res,next)
+)
+
+router.patch("/addTestRes", 
+// AuthMiddleware.protectUser,
+  (req: Request, res: Response, next: NextFunction) =>
+    userAdapter.addTestRes(req, res, next)
+);
+
+
 export default router;

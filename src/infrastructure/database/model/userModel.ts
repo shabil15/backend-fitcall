@@ -2,6 +2,8 @@ import mongoose, { Document, Model, Schema } from "mongoose";
 import { IUser } from "../../../domain/user";
 import { subscriptionSchema } from "./subscriptionModel";
 import { ISubscription } from "../../../domain/subscription";
+import { dietSchema } from "./dietModel";
+import { IDiet } from "../../../domain/diet";
 
 const userSchema: Schema = new Schema<IUser & Document>(
   {
@@ -18,6 +20,8 @@ const userSchema: Schema = new Schema<IUser & Document>(
     height:{type:String,default:""},
     weight:{type:String,default:""},
     goal:{type:String,default:""},
+    diet:dietSchema,
+    testResult: { type: String,default: "" },
   },
   {
     timestamps: true,
