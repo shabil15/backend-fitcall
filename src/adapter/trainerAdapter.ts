@@ -113,6 +113,7 @@ export class TrainerAdapter{
     try {
       const {trainerId} = req.params;
       const { description } = req.body;
+      console.log("req",trainerId,description);
       const trainer = await this.trainerusecase.addDescription(trainerId,description); 
       trainer && 
         res.status(trainer.status).json({
