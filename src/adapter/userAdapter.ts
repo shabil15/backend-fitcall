@@ -377,4 +377,17 @@ export class UserAdapter {
       next(err);
     }
   }
+
+  async createRefund(req: Req, res: Res,next:Next): Promise<void> {
+    const { userId } = req.params;
+
+    try {
+      const result = await this.userusecase.createRefund(userId);
+      res.status(200).json({user:result});
+    } catch (error:any) {
+      console.error('Error cancelling subscription and creating refund:', error);
+      res.status(500).json({ message: error.message });
+      next(error)
+    }
+  }
 }

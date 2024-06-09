@@ -109,5 +109,18 @@ router.patch("/addTestRes",
     userAdapter.addTestRes(req, res, next)
 );
 
+router.post('/:userId/refund',
+  (req:Request,res:Response,next:NextFunction) => 
+    userAdapter.createRefund(req,res,next)
+)
+
+
+// router.post("/refund", async (req, res) => {
+//   const refund = await stripeService.createRefund(
+//    'pi_3PPkwpSH9t7Bwd2Y0AeOrlgl',3999,
+//   );
+//   console.log("refunded",refund);
+// });
+
 
 export default router;

@@ -3,6 +3,7 @@ import { IforgotPassword,StoreData,paymentDatas } from "../services/Iresponse";
 import { IDiet } from "../../../domain/diet";
 
 export interface IUserRepository {
+  save(user: IUser): unknown;
   createUser(newUser: IUser): Promise<IUser>;
   findUser(email: string): Promise<IUser | null>;
   blockUser(_id:string):Promise<string | null>;
@@ -16,4 +17,5 @@ export interface IUserRepository {
   findById(userId: string): Promise<IUser | null>;
   updateDiet(userId:string,diet:IDiet):Promise<IUser | null>;
   addTestRes(testResult:string,_id:string): Promise<IUser | never>;
+  createRefund(userId:string):Promise<IUser | never>;
 }

@@ -16,10 +16,14 @@ import { findById } from "./user/findById";
 import { IDiet } from "../../../domain/diet";
 import { updateDiet } from "./user/updateDiet";
 import { addTestRes } from "./user/addTestRes";
+import { createRefund } from "./user/createRefund";
 
 
 export class UserRepository implements IUserRepository {
   constructor(private readonly usersModel: typeof UserModel) { }
+  save(user: IUser): unknown {
+    throw new Error("Method not implemented.");
+  }
 
   async createUser(newUser: IUser): Promise<IUser> {
     return createUser(newUser, this.usersModel);
@@ -72,6 +76,10 @@ export class UserRepository implements IUserRepository {
 
   async addTestRes(testResult: string, _id: string): Promise<IUser | never> {
     return addTestRes(_id, testResult, this.usersModel)
+  }
+
+   async createRefund(userId: string): Promise<IUser> {
+    return createRefund(userId, this.usersModel)
   }
   
 }

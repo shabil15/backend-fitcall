@@ -25,6 +25,7 @@ import { getSubscription } from "./user/getSubscriptions";
 import { updateDiet } from "./user/updateDiet";
 import { IDiet } from "../../domain/diet";
 import { addTestRes } from "./user/addTestRes";
+import { StripeService1 } from "../../infrastructure/services/stripeRefund";
 
 export class UserUseCase {
   private readonly userRepository: IUserRepository;
@@ -33,13 +34,15 @@ export class UserUseCase {
   private readonly nodemailer: INodemailer;
   private readonly requestValidator: IRequestValidator;
   private readonly stripe: IStripe;
+  private stripeService: StripeService1
   constructor(
     userRepository: IUserRepository,
     bcrypt: IHashpassword,
     jwt: Ijwt,
     nodemailer: INodemailer,
     requestValidator: IRequestValidator,
-    stripe: IStripe
+    stripe: IStripe,
+    stripeService:StripeService1
 
   ) {
     this.userRepository = userRepository;
@@ -48,6 +51,7 @@ export class UserUseCase {
     this.nodemailer = nodemailer;
     this.requestValidator = requestValidator;
     this.stripe = stripe;
+    this.stripeService = stripeService;
   }
 
   async createUser({
@@ -244,7 +248,30 @@ export class UserUseCase {
     );
   }
 
-  
+  async createRefund(userId: string): Promise<void> {
+    try {
+      const user = await this.userRepository.findById(userId);
+      if (!user) throw new Error('User not found');
+
+      const activeSubscription = user?.subscriptions?.find(sub => sub.isActive);
+      if (!activeSubscription) throw new Error('No active subscription found');
+
+      const now = new Date();
+      const start = new Date(activeSubscription.start);
+      const diff = (now.getTime() - start.getTime()) / (1000 * 3600 * 24);
+
+      if (diff > 3) throw new Error('Refund period has expired');
+
+      await this.stripeService.createRefund(activeSubscription.paymentId, activeSubscription.amount);
+      
+      activeSubscription.isActive = false;
+      activeSubscription.cancelledAt = now;
+
+      await this.userRepository.createRefund(userId);
+    } catch (error) {
+      throw error;
+    }
+  }
 
   
 }

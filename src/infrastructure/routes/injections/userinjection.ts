@@ -7,6 +7,7 @@ import JwtPassword from "../../services/jwt";
 import Nodemailer from "../../services/nodemailer"
 import RequestValidator from "../../services/validateRepository";
 import StripeService from "../../services/stripe";
+import { StripeService1 } from "../../services/stripeRefund";
 
 
 const userRepository = new UserRepository(UserModel);
@@ -14,6 +15,7 @@ const bcrypt = new Encrypt();
 const jwt = new JwtPassword();
 const nodemailer = new Nodemailer();
 const stripe = new StripeService();
+const stripeRefund = new StripeService1();
 
 const requestValidator = new RequestValidator();
 
@@ -24,6 +26,7 @@ const userusecase = new UserUseCase(
   nodemailer,
   requestValidator,
   stripe,
+  stripeRefund
 );
 const userAdapter = new UserAdapter(userusecase);
 

@@ -5,4 +5,5 @@ export interface ISubscription {
     paymentId: string;
     amount: number;
     isActive:boolean;
+    cancelledAt?: Date;     
   }
