@@ -380,10 +380,12 @@ export class UserAdapter {
 
   async createRefund(req: Req, res: Res,next:Next): Promise<void> {
     const { userId } = req.params;
+    console.log('user refund ')
 
     try {
       const result = await this.userusecase.createRefund(userId);
-      res.status(200).json({user:result});
+      res.status(200).json({user:result,message:"Refund done successfully"});
+      
     } catch (error:any) {
       console.error('Error cancelling subscription and creating refund:', error);
       res.status(500).json({ message: error.message });

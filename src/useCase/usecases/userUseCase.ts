@@ -248,7 +248,7 @@ export class UserUseCase {
     );
   }
 
-  async createRefund(userId: string): Promise<void> {
+  async createRefund(userId: string): Promise<IUser | never> {
     try {
       const user = await this.userRepository.findById(userId);
       if (!user) throw new Error('User not found');
@@ -267,7 +267,8 @@ export class UserUseCase {
       activeSubscription.isActive = false;
       activeSubscription.cancelledAt = now;
 
-      await this.userRepository.createRefund(userId);
+      const newUser = await this.userRepository.createRefund(userId);
+      return newUser;
     } catch (error) {
       throw error;
     }

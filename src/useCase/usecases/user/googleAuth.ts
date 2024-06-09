@@ -64,7 +64,7 @@ export const googleAuth = async (
             status: 200,
             success: true,
             token: token,
-            data:responseData,
+            data:user,
             message: `Login successful. Welcome ${user.name}`,
           };
         }  
