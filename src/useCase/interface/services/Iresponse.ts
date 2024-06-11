@@ -63,11 +63,9 @@ export interface ITrainerResponse<T = string | ITrainer | ITrainer[] | null>{
 }
 
 export interface paymentDatas{
-  _id?:string;
-  name?:string;
+  user?:IUser;
   amount?:number;
   transactionId?:string;
   userId?:string;
-  email?:string;
   message?:string;
 }

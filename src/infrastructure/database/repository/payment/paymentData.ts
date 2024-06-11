@@ -29,9 +29,7 @@ export const paymentData = async (
             user.isSubscribed = true;
             await user.save();
             const responseData: paymentDatas = {
-                _id: user._id,
-                name: user.name,
-                email: user.email,
+                user:user,
                 amount: amount,
                 transactionId: transactionId,
                 userId: userId,

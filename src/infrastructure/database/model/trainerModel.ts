@@ -1,6 +1,6 @@
 import mongoose, { Document, Model, Schema } from "mongoose";
 import { ITrainer } from "../../../domain/trainer";
-
+import { sessionSchema } from "./sessionModel";
 
 const trainerSchema: Schema = new Schema<ITrainer & Document>(
   {
@@ -16,6 +16,7 @@ const trainerSchema: Schema = new Schema<ITrainer & Document>(
     status: { type: String, default: "pending" },
     isBlocked: { type: Boolean, default: false },
     experience: { type: String, default: "" },
+    sessions: { type: [sessionSchema], default: [] },
   },
   {
     timestamps: true,

@@ -9,6 +9,8 @@ import { addProfile } from "./trainer/addProfile";
 import { IUser } from "../../domain/user";
 import {addDescription} from './trainer/addDescription';
 import { addExperience } from "./trainer/addExperience";
+import { ISession } from "../../domain/session";
+import { addSession } from "./trainer/addSession";
 
 export class TrainerUseCase {
   private readonly trainerRepository: ITrainerRepository;
@@ -121,4 +123,13 @@ async addDescription(trainerId: string, description:string) {
 async addExperience(trainerId: string, experience:string) {
   return addExperience(this.requestValidator,this.trainerRepository, trainerId, experience)
 }
+
+async addSession(trainerId:string,session:ISession) {
+  return addSession(this.requestValidator,this.trainerRepository,trainerId,session);
+}
+
+async getSessions(trainerId: string): Promise<any> {
+  return await this.trainerRepository.getSessions(trainerId);
+}
+
 }
