@@ -52,4 +52,16 @@ router.patch(
     trainerAdapter.addExperience(req,res,next)
 )
 
+router.post(
+  "/addsession", 
+  (req:Request, res:Response,next:NextFunction) => 
+  trainerAdapter.addSession(req, res,next)
+);
+
+router.get(
+  "/:trainerId/sessions",
+  async(req:Request,res:Response,next:NextFunction) =>
+    trainerAdapter.getSessions(req,res,next) 
+)
+
 export default router

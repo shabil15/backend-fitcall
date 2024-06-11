@@ -6,7 +6,7 @@ export const getUser = async (email: string):Promise<IResponse> =>{
   try{
     const user = await findUser(email,UserModel);
     if (user === null) {
-      throw new Error("Trainer not found");
+      throw new Error("User not found");
     }
     return {
       status:200,
@@ -14,6 +14,6 @@ export const getUser = async (email: string):Promise<IResponse> =>{
       data:user,
     };
   } catch (error) {
-    throw new Error(`Error fetching trainer: ${error}`);
+    throw new Error(`Error fetching user: ${error}`);
   }
 }

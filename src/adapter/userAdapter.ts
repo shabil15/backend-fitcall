@@ -317,11 +317,11 @@ export class UserAdapter {
     try {
       const { email } = req.query;
       if (typeof email === 'string') {
-        const trainer = await this.userusecase.getUser(email);
-        trainer &&
-          res.status(trainer.status).json({
-            success: trainer.success,
-            data: trainer.data
+        const user = await this.userusecase.getUser(email);
+        user &&
+          res.status(user.status).json({
+            success: user.success,
+            user: user.data,
           });
       } else {
         res.status(400).json({ success: false, message: 'Invalid id' });

@@ -1,6 +1,7 @@
 import { ITrainer } from "../../../domain/trainer";
 import { RequesEmailData } from "../services/Iresponse";
 import { IUser } from "../../../domain/user";
+import { ISession } from "../../../domain/session";
 
 export interface ITrainerRepository {
   createTrainer(newTrainer:ITrainer):Promise<string>;
@@ -12,4 +13,6 @@ export interface ITrainerRepository {
   getClients(trainerId: string): Promise<IUser[]>;
   addDescription(trainerId:string,description:string):Promise<ITrainer | null>;
   addExperience(trainerId:string,experience:string):Promise<ITrainer | null>;
+  addSession(trainerId:string,session:ISession):Promise<ITrainer | null>;
+  getSessions(trainerId:string): Promise<any>
 }

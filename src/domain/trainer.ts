@@ -1,3 +1,5 @@
+import { ISession } from "./session";
+
 export interface ITrainer {
   _id?: string;
   name: string;
@@ -13,4 +15,5 @@ export interface ITrainer {
   isBlocked?: boolean;
   createdAt?: Date;
   experience?:string;
+  sessions?:ISession[];
 }
