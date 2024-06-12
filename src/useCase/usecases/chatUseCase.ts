@@ -1,6 +1,8 @@
 import { IChatRepository } from "../interface/repository/IChatRepository";
 import { IRequestValidator } from "../interface/repository/IValidRepository";
 import { createConversation } from "./chat/createConversation";
+import { createMessage } from "./chat/createMessage";
+import { getMessage } from "./chat/getMessage";
 
 
 export class ChatUseCase{
@@ -14,7 +16,7 @@ export class ChatUseCase{
         this.chatRepository = serviceRepository;
         this.requestValidator = requestValidator;
     }
-    
+
 
     async createConversation({
         senderId,
@@ -29,4 +31,34 @@ export class ChatUseCase{
             senderId,
             recieverId); 
     }
+
+
+    async createMessage({
+        conversationId,
+        senderId,
+        receiverId,
+        text
+    }:{
+        conversationId:string,
+        senderId:string,
+        receiverId:string,
+        text:string,
+    }){
+        return createMessage(
+            this.requestValidator,
+            this.chatRepository,
+            conversationId,
+            senderId,
+            receiverId,
+            text
+        )
+    }
+
+    async getMessage(conversationId:string) {
+        return getMessage(
+          this.requestValidator,
+          this.chatRepository,
+          conversationId
+        );
+      }
 }
