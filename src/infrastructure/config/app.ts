@@ -6,6 +6,7 @@ import morgan from "morgan";
 import userRouter from "../routes/userRoute";
 import adminRouter from "../routes/adminRoute";
 import trainerRouter from "../routes/trainerRoute";
+import chatRouter from '../routes/chatRoute';
 import errorHandler from "../../useCase/handler/errorHandler";
 import checkSubscription from "../services/checkSubscription";
 
@@ -23,6 +24,7 @@ app.use(morgan("dev"));
 app.use("/api/user", userRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/trainer", trainerRouter);
+app.use('/api/chat',chatRouter);
 
 
 app.use(errorHandler);

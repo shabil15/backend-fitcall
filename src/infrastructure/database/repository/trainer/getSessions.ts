@@ -26,6 +26,8 @@ export const getSessions = async (trainerId: string, userModels: typeof UserMode
               $project: {
                 startTime: '$sessions.startTime',
                 clientName: '$userDetails.name',
+                userId: '$userDetails._id',
+                clientPlan:'$userDetails.goal'
               },
             },
           ]);

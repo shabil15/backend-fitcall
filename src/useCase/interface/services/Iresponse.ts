@@ -1,6 +1,7 @@
 import { IUser } from "../../../domain/user";
 import { ITrainer } from "../../../domain/trainer";
 import { IDiet } from "../../../domain/diet";
+import { IMessage } from "../../../domain/message";
 
 
 // export interface Response<T = IUser| IUser[]|string> {
@@ -68,4 +69,29 @@ export interface paymentDatas{
   transactionId?:string;
   userId?:string;
   message?:string;
+}
+
+export interface ConversationResponse<T = IConversationData| IConversationData[]|string> {
+  status: number;
+  success: boolean;
+  message?: string;
+  data?: T;
+}
+
+
+export interface MessageResponse<T = IMessage|IMessage[]|string> {
+  status: number;
+  success: boolean;
+  message?: string;
+  data?: T;
+}
+
+export interface IConversationData {
+  _id: string;
+  members: string[];
+  user:string,
+  userEmail:string,
+  user_profile:string,
+  trainer:string,
+  trainer_profile:string
 }
