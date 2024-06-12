@@ -14,6 +14,7 @@ export class ChatUseCase{
         this.chatRepository = serviceRepository;
         this.requestValidator = requestValidator;
     }
+    
 
     async createConversation({
         senderId,
