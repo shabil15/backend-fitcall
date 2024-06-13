@@ -5,7 +5,7 @@ export const createConversation = async (
     recieverId:string,
     conversationModel: typeof ConversationModel
 ): Promise<string> => {
-    try {
+    try {   
         const newConversation = await conversationModel.create({
             members:[senderId,recieverId]
         })

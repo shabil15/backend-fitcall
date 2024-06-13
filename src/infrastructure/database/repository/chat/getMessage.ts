@@ -18,4 +18,4 @@ export const getMessage = async (
     }catch(err){
         throw err
     }
-}
+}   
