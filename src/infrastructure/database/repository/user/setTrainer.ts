@@ -11,6 +11,11 @@ export const setTrainer = async (
         console.log("set Trainer repositories");
         const user = await userModels.findOne({_id: data.userId}).select("-password")
         const trainer  = await TrainerModel.findOne({_id:data.trainerId}).select("-password")
+        
+        if(trainer){
+            trainer.clientCount = trainer.clientCount?trainer.clientCount + 1 : 1 ;
+            await trainer.save();
+        }
         if(user) {
             if(user.isSubscribed){
             user.trainerId = data.trainerId;

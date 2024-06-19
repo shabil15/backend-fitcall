@@ -1,3 +1,4 @@
+import { httpServer } from "./infrastructure/config/app";
 import { app } from "./infrastructure/config/app";
 import connectDB from "./infrastructure/config/connectDB";
 import dotenv from 'dotenv';
@@ -10,7 +11,7 @@ const start = () => {
     res.send('hello')
   })
 
-  app.listen(PORT,()=> {
+  httpServer.listen(PORT,()=> {
     connectDB()
     console.log(`Server connected to http://localhost/${PORT}`); 
   })

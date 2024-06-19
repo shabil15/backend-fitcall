@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
+import http from "http";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import morgan from "morgan";
@@ -7,8 +8,10 @@ import userRouter from "../routes/userRoute";
 import adminRouter from "../routes/adminRoute";
 import trainerRouter from "../routes/trainerRoute";
 import chatRouter from '../routes/chatRoute';
+import ratingRouter from '../routes/ratingRoutes';
 import errorHandler from "../../useCase/handler/errorHandler";
 import checkSubscription from "../services/checkSubscription";
+import { SocketManager } from "../services/Socket";
 
 dotenv.config();
 export const app = express();
@@ -21,11 +24,15 @@ app.use(
 );
 app.use(morgan("dev"));
 
+const httpServer = http.createServer(app);
+const socket = new SocketManager(httpServer);
 app.use("/api/user", userRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/trainer", trainerRouter);
 app.use('/api/chat',chatRouter);
+app.use('/api/rating',ratingRouter);
 
 
 app.use(errorHandler);
 checkSubscription();
+export { httpServer };
