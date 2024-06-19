@@ -1,4 +1,5 @@
 import { ISession } from "./session";
+import { IRating } from "./rating";
 
 export interface ITrainer {
   _id?: string;
@@ -16,4 +17,7 @@ export interface ITrainer {
   createdAt?: Date;
   experience?:string;
   sessions?:ISession[];
+  clientCount?:number;
+  ratings?:IRating[];
+
 }

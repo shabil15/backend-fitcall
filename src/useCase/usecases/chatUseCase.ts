@@ -20,16 +20,16 @@ export class ChatUseCase{
 
     async createConversation({
         senderId,
-        recieverId
+        receiverId
     }:{
         senderId:string,
-        recieverId:string
+        receiverId:string
     }){
         return createConversation(
             this.requestValidator,
             this.chatRepository,
             senderId,
-            recieverId); 
+            receiverId); 
     }
 
 

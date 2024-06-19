@@ -1,6 +1,9 @@
 import mongoose, { Document, Model, Schema } from "mongoose";
 import { ITrainer } from "../../../domain/trainer";
 import { sessionSchema } from "./sessionModel";
+import { IRating } from "../../../domain/rating";
+import { ratingSchema } from "./ratingModel";
+
 
 const trainerSchema: Schema = new Schema<ITrainer & Document>(
   {
@@ -17,6 +20,9 @@ const trainerSchema: Schema = new Schema<ITrainer & Document>(
     isBlocked: { type: Boolean, default: false },
     experience: { type: String, default: "" },
     sessions: { type: [sessionSchema], default: [] },
+    clientCount: { type: Number, default: 0 },
+    ratings: { type: [ratingSchema], default: [] },
+
   },
   {
     timestamps: true,
