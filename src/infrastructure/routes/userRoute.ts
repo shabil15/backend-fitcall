@@ -114,13 +114,12 @@ router.post('/:userId/refund',
     userAdapter.createRefund(req,res,next)
 )
 
+router.get("/:userId/notifications",
+(req:Request,res:Response,next:NextFunction) =>
+  userAdapter.getNotifications(req,res,next)
+)
 
-// router.post("/refund", async (req, res) => {
-//   const refund = await stripeService.createRefund(
-//    'pi_3PPkwpSH9t7Bwd2Y0AeOrlgl',3999,
-//   );
-//   console.log("refunded",refund);
-// });
+
 
 
 export default router;

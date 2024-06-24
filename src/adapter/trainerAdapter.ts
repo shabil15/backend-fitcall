@@ -1,3 +1,4 @@
+import { createNotification } from "../infrastructure/services/notification";
 import { Next, Req, Res } from "../infrastructure/types/expressTypes";
 import { TrainerUseCase } from "../useCase/usecases/trainerUseCase";
 
@@ -150,7 +151,9 @@ export class TrainerAdapter {
       console.log(trainerId,userId,startTime)
 
       const trainer = await this.trainerusecase.addSession(trainerId, { userId,startTime });
+
       trainer &&
+      createNotification("Session Time Update","Your Trainer Updated Your Time for session",userId)
        res.status(trainer.status).json({
         message: trainer.message,
         success: trainer.success,

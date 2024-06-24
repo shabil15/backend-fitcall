@@ -1,6 +1,6 @@
 import { paymentDatas } from "../../../../useCase/interface/services/Iresponse";
 import UserModel from "../../model/userModel";
-
+import { createNotification } from "../../../services/notification";
 
 export const paymentData = async (
     email: string,
@@ -20,6 +20,8 @@ export const paymentData = async (
                 currentSub.end = new Date(currentSub.end.getFullYear(), currentSub.end.getMonth()+11, currentSub.end.getDate())
                 currentSub.paymentId = transactionId;
                 currentSub.amount = 39999;
+
+                createNotification('Subscription Update',"Subscription plan changed to monthly plan to Annual Plan", user?._id)
 
             }
             }else{
@@ -47,6 +49,8 @@ export const paymentData = async (
                 userId: userId,
                 message: 'Payment Successfull',
             }
+            createNotification('Subscription Success',`Your Subscription is Successfull `, user?._id)
+
             return responseData
         } else {
             throw new Error("User not found");

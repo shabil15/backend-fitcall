@@ -42,7 +42,7 @@ export class UserUseCase {
     nodemailer: INodemailer,
     requestValidator: IRequestValidator,
     stripe: IStripe,
-    stripeService:StripeService1
+    stripeService: StripeService1
 
   ) {
     this.userRepository = userRepository;
@@ -263,7 +263,7 @@ export class UserUseCase {
       if (diff > 3) throw new Error('Refund period has expired');
 
       await this.stripeService.createRefund(activeSubscription.paymentId, activeSubscription.amount);
-      
+
       activeSubscription.isActive = false;
       activeSubscription.cancelledAt = now;
 
@@ -274,5 +274,14 @@ export class UserUseCase {
     }
   }
 
-  
+  async getNotifications(userId: string) {
+    try {
+
+      const notifications = await this.userRepository.getUserNotifications(userId);
+      return notifications
+    } catch (error) {
+      throw error
+    }
+  }
+
 }

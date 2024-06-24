@@ -1,6 +1,7 @@
 import { IUser } from "../../../../domain/user";
 import UserModel from "../../model/userModel";
 import { IDiet } from "../../../../domain/diet";
+import { createNotification } from "../../../services/notification";
 
 export const updateDiet = async(
     userId:string,
@@ -15,7 +16,7 @@ try {
       ).exec();
 
       const user = await userModels.findOne({_id:userId}).select("-password");
-
+      createNotification("Diet update", "Your Trainer updated your diet",user?._id);
       return user;
     
 } catch (error) {

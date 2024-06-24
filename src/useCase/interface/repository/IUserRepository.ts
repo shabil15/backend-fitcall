@@ -1,6 +1,8 @@
 import { IUser } from "../../../domain/user";
 import { IforgotPassword,StoreData,paymentDatas } from "../services/Iresponse";
 import { IDiet } from "../../../domain/diet";
+import { NotificationDocument } from "../../../infrastructure/database/model/notificationModel";
+
 
 export interface IUserRepository {
   save(user: IUser): unknown;
@@ -18,4 +20,5 @@ export interface IUserRepository {
   updateDiet(userId:string,diet:IDiet):Promise<IUser | null>;
   addTestRes(testResult:string,_id:string): Promise<IUser | never>;
   createRefund(userId:string):Promise<IUser | never>;
+  getUserNotifications(userId: string): Promise<NotificationDocument[]>;
 }

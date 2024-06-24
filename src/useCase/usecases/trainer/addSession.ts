@@ -4,7 +4,6 @@ import { IRequestValidator } from "../../interface/repository/IValidRepository"
 import { ITrainerResponse } from "../../interface/services/Iresponse"
 import { ISession } from "../../../domain/session"
 
-
 export const addSession = async (
     requestValidator: IRequestValidator,
     trainerRepository: ITrainerRepository,
@@ -24,6 +23,7 @@ export const addSession = async (
 
 
         const updatedTrainer = await trainerRepository.addSession(trainerId, session);
+
 
         return {
             status: 200,

@@ -69,6 +69,8 @@ export class UserAdapter {
         data: user.data,
         message: user.message,
       });
+
+
     } catch (error) {
       next(error);
     }
@@ -388,6 +390,21 @@ export class UserAdapter {
       
     } catch (error:any) {
       console.error('Error cancelling subscription and creating refund:', error);
+      res.status(500).json({ message: error.message });
+      next(error)
+    }
+  }
+
+  async getNotifications(req: Req, res: Res,next:Next) {
+    const { userId } = req.params;
+    console.log('user notification ')
+
+    try {
+      const result = await this.userusecase.getNotifications(userId);
+      res.status(200).json({user:result,message:"notification fetched successfully"});
+      
+    } catch (error:any) {
+      console.error('Error fetching notification:', error);
       res.status(500).json({ message: error.message });
       next(error)
     }

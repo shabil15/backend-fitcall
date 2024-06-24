@@ -17,6 +17,7 @@ import { IDiet } from "../../../domain/diet";
 import { updateDiet } from "./user/updateDiet";
 import { addTestRes } from "./user/addTestRes";
 import { createRefund } from "./user/createRefund";
+import Notification,{ NotificationDocument } from "../model/notificationModel";
 
 
 export class UserRepository implements IUserRepository {
@@ -81,5 +82,15 @@ export class UserRepository implements IUserRepository {
    async createRefund(userId: string): Promise<IUser> {
     return createRefund(userId, this.usersModel)
   }
+
+  async getUserNotifications(userId: string): Promise<NotificationDocument[]> {
+    try {
+        // Example: Assuming NotificationModel has a userId field to filter by
+        const notifications = await Notification.find({ userId: userId }).sort({ createdAt: -1 }).exec();
+        return notifications;
+    } catch (error) {
+        throw error;
+    }
+}
   
 }
