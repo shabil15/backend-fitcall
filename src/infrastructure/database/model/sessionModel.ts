@@ -5,7 +5,6 @@ const sessionSchema = new Schema<ISession>({
   userId: { type: mongoose.Types.ObjectId ,ref: 'User',required: true },
   startTime: { type:String, required: true },
 },
-{ _id: false } 
 );
 
 const SessionModel: Model<ISession> = mongoose.model<ISession>('Session', sessionSchema);

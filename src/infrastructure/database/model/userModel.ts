@@ -21,6 +21,8 @@ const userSchema: Schema = new Schema<IUser & Document>(
     weight:{type:String,default:""},
     goal:{type:String,default:""},
     diet:dietSchema,
+    sessionTime:{type:String,default:""},
+    sessionId: { type: String, default: "" },
     testResult: { type: String,default: "" },
   },
   {

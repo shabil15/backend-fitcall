@@ -17,5 +17,7 @@ export interface IUser {
   weight?: string;
   goal?: string;
   diet?:IDiet;
+  sessionTime?:string;
   testResult?:string;
+  sessionId?:string;
 }

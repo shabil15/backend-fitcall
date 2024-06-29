@@ -189,4 +189,22 @@ export class TrainerAdapter {
     }
   }
 
+
+  async removeSession(req: Req, res: Res, next: Next){
+    try {
+      const { trainerId, sessionId } = req.params;
+      console.log(trainerId,sessionId)
+      if (!trainerId ||!sessionId) {
+        res.status(400).json({ message: "Trainer ID and Session ID are required" });
+        return;
+      }
+      const trainer = await this.trainerusecase.removeSessions(trainerId, sessionId);
+      trainer &&
+      res.status(200).json({ message: "Session removed successfully" });
+  }catch(err){
+    console.error("Error removing sessions:", err);
+      res.status(500).json({ message: "Internal Server Error" });
+  }
+
+  }
 }

@@ -10,12 +10,19 @@ export class AdminAdapter {
 
   async loginAdmin(req: Req, res: Res, next: Next) {
     try {
-      const user = await this.adminusecase.loginAdmin(req.body);
-      user &&
-        res.status(user.status).json({
-          succeess: user.success,
-          data: user.data,
-          message: user.message,
+      const admin = await this.adminusecase.loginAdmin(req.body);
+      admin &&
+      res.cookie("adminjwt", admin.token, {
+        httpOnly: true,
+        sameSite: "none", 
+        maxAge: 30 * 24 * 60 * 60 * 1000, 
+        secure: true
+      });
+
+        res.status(admin.status).json({
+          succeess: admin.success,
+          data: admin.data,
+          message: admin.message,
         });
     } catch (error) {
       next(error);
