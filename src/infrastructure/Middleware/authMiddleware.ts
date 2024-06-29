@@ -2,10 +2,12 @@ import jwt from 'jsonwebtoken';
 import { Request,Response,NextFunction } from 'express';
 import { UserRepository } from '../database/repository/userRepository';
 import { AdminRepository } from '../database/repository/adminRepository';
+import { TrainerRepository } from '../database/repository/trainerRepository';
 import { IUser } from '../../domain/user';
 import { IAdmin } from '../../domain/admin';
 import UserModel from '../database/model/userModel';
 import AdminModel from '../database/model/adminModel';
+import TrainerModel from '../database/model/trainerModel';
 
 declare global {
   namespace Express {
@@ -77,6 +79,39 @@ class AuthMiddleware {
       res.status(401).send('Not authorized, no token');
     }
   }
+
+  static async protectTrainer(req: Request, res: Response, next: NextFunction): Promise<void> {
+    let token: string | undefined;
+
+    console.log('trainer protect');
+    token = req.cookies.trainerjwt;
+
+    const trainerRepository = new TrainerRepository(TrainerModel,UserModel)
+
+    if (token) {
+      try {
+        const decoded: any = jwt.verify(token, process.env.JWT_KEY as string);
+        const trainer = await trainerRepository.findTrainer(decoded.email);
+        if (trainer) {
+          req.user = trainer;
+          console.log('before next');
+          next();
+        } else {
+          console.error('trainer not found');
+          res.status(404).send('trainer not found');
+        }
+      } catch (error) {
+        console.error(error);
+        res.status(401).send('Not authorized, no token');
+      }
+    } else {
+      console.log('No token');
+      res.status(401).send('Not authorized, no token');
+    }
+  }
+
+
+
 }
 
 export default AuthMiddleware;

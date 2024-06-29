@@ -11,14 +11,14 @@ router.post("/login",
 
 router.get(
   "/getUsers",
-  //AuthMiddleware.protectAdmin,
+  AuthMiddleware.protectAdmin,
   (req: Request, res: Response, next: NextFunction) =>
     adminAdapter.getUsers(req, res, next)
 );
 
 router.patch(
   "/users/unblock-block",
-  // AuthMiddleware.protectAdmin,
+  AuthMiddleware.protectAdmin,
   (req: Request, res: Response, next: NextFunction) =>
     adminAdapter.blockUnblockUser(req, res, next)
 );
@@ -26,18 +26,21 @@ router.patch(
 
 router.get(
   "/getJoinRequests",
+  AuthMiddleware.protectAdmin,
   (req: Request, res: Response, next: NextFunction) =>
     adminAdapter.getJoinRequests(req, res, next)
 );
 
 router.patch(
   "/reviewRequests",
+  AuthMiddleware.protectAdmin,
   (req:Request,res:Response,next:NextFunction) => 
     adminAdapter.reviewRequests(req,res,next)
 )
 
 router.patch(
   "/trainer/unblock-block",
+  AuthMiddleware.protectAdmin,
   (req:Request,res:Response,next:NextFunction) => 
     adminAdapter.block_unBlockTrainer(req,res,next)
 )

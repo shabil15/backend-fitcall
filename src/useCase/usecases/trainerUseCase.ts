@@ -132,4 +132,7 @@ async getSessions(trainerId: string): Promise<any> {
   return await this.trainerRepository.getSessions(trainerId);
 }
 
+async removeSessions(trainerId:string,sessionId:string): Promise<any> {
+  return await this.trainerRepository.removeSessions(trainerId,sessionId);
+}
 }
