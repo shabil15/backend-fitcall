@@ -1,110 +1,80 @@
-import { Server, Socket } from "socket.io";
-import { createServer as createHttpServer, Server as HttpServer } from "http";
+import { Server as SocketIOServer } from "socket.io";
+import http from "http";
 
-interface IUser {
-  userId: string;
-  socketId: string;
-}
+class SocketManager {
+  private io: SocketIOServer;
 
-export class SocketManager {
-  private httpServer: HttpServer;
-  private io: Server;
-  private users: IUser[] = [];
-
-  constructor(httpServer: HttpServer) {
-    this.httpServer = httpServer;
-    this.io = new Server(this.httpServer, {
+  constructor(server: http.Server) {
+    this.io = new SocketIOServer(server, {
       cors: {
-        origin: "http://localhost:4000",
+        origin: "*",
+        methods: ["GET", "POST"],
       },
     });
 
-    this.io.on("connection", this.handleConnection);
+    this.initialize();
   }
 
-  private handleConnection = (socket: Socket): void => {
-    console.log("Socket connected", socket.id);
+  private initialize() {
+    this.io.on("connection", (socket) => {
+      console.log("New client connected:", socket.id);
 
-    socket.on("room:join", (data) => this.handleRoomJoin(socket, data));
-    socket.on('user:call', (data) => this.handleUserCall(socket, data));
-    socket.on("call:accepted", (data) => this.handleCallAccepted(socket, data));
-    socket.on("peer:nego:needed", (data) => this.handlePeerNegoNeeded(socket, data));
-    socket.on("peer:nego:done", (data) => this.handlePeerNegoDone(socket, data));
-    socket.on('startScreenShare', (data) => this.handleStartScreenShare(socket, data));
-    socket.on('stopScreenShare', (data) => this.handleStopScreenShare(socket, data));
-    socket.on("addUser", (userId) => this.handleAddUser(socket, userId));
-    socket.on("sendMessage", (data) => this.handleSendMessage(socket, data));
-    socket.on("disconnect", () => this.handleDisconnect(socket));
-  };
-
-  private handleRoomJoin(socket: Socket, data: any): void {
-    const { trainer, room } = data;
-    this.io.to(room).emit("user:joined", { trainer, id: socket.id });
-    socket.join(room);
-    this.io.to(socket.id).emit("room:join", data);
-  }
-
-  private handleUserCall(socket: Socket, { to, offer }: any): void {
-    console.log("user:call");
-    this.io.to(to).emit("incomming:call", { from: socket.id, offer });
-  }
-
-  private handleCallAccepted(socket: Socket, { to, ans }: any): void {
-    this.io.to(to).emit("call:accepted", { from: socket.id, ans });
-  }
-
-  private handlePeerNegoNeeded(socket: Socket, { to, offer }: any): void {
-    this.io.to(to).emit("peer:nego:needed", { from: socket.id, offer });
-  }
-
-  private handlePeerNegoDone(socket: Socket, { to, ans }: any): void {
-    console.log(`Peer negotiation done from ${socket.id} to ${to}, ans:`, ans);
-    this.io.to(to).emit("peer:nego:final", { from: socket.id, ans });
-  }
-
-  private handleStartScreenShare(socket: Socket, { to }: any): void {
-    console.log(`User ${socket.id} started screen share for ${to}`);
-    this.io.to(to).emit('startScreenShare', { from: socket.id });
-  }
-
-  private handleStopScreenShare(socket: Socket, { to }: any): void {
-    console.log(`User ${socket.id} stopped screen share for ${to}`);
-    this.io.to(to).emit('stopScreenShare', { from: socket.id });
-  }
-
-  private handleAddUser(socket: Socket, userId: string): void {
-    this.addUser(userId, socket.id);
-    this.io.emit("getUsers", this.users);
-  }
-
-  private handleSendMessage(socket: Socket, { senderId, receiverId, text, image }: any): void {
-    const user = this.getUser(receiverId);
-    if (user) {
-      this.io.to(user.socketId).emit("getMessage", {
-        senderId,
-        text,
-        image
+      socket.on("join-session", (sessionId, userId) => {
+        this.joinSession(socket, sessionId, userId);
       });
+
+      socket.on("disconnect", () => {
+        this.handleDisconnect(socket);
+      });
+
+      // Handle signaling events
+      socket.on("offer", (sessionId, offer) => {
+        this.handleOffer(socket, sessionId, offer);
+      });
+
+      socket.on("answer", (sessionId, answer) => {
+        this.handleAnswer(socket, sessionId, answer);
+      });
+
+      socket.on("ice-candidate", (sessionId, candidate) => {
+        this.handleIceCandidate(socket, sessionId, candidate);
+      });
+    });
+  }
+
+  private joinSession(socket: any, sessionId: string, userId: string) {
+    socket.join(sessionId);
+    socket.to(sessionId).emit("user-connected", userId);
+    console.log(`User ${userId} joined session ${sessionId}`);
+  }
+
+  private handleDisconnect(socket: any) {
+    const rooms = Object.keys(socket.rooms);
+    rooms.forEach((room) => {
+      socket.to(room).emit("user-disconnected", socket.id);
+    });
+    console.log(`Client disconnected: ${socket.id}`);
+  }
+
+  private handleOffer(socket: any, sessionId: string, offer: any) {
+    try {
+      socket.to(sessionId).emit("offer", offer);
+      console.log(`Offer sent to session ${sessionId}`);
+    } catch (error) {
+      console.error(`Error handling offer for session ${sessionId}:`, error);
     }
   }
+  
 
-  private handleDisconnect(socket: Socket): void {
-    console.log("user disconnected");
-    this.removeUser(socket.id);
-    this.io.emit("getUsers", this.users);
+  private handleAnswer(socket: any, sessionId: string, answer: any) {
+    socket.to(sessionId).emit("answer", answer);
+    console.log(`Answer sent to session ${sessionId}`);
   }
 
-  private addUser(userId: string, socketId: string): void {
-    if (!this.users.some(user => user.userId === userId)) {
-      this.users.push({ userId, socketId });
-    }
-  }
-
-  private removeUser(socketId: string): void {
-    this.users = this.users.filter(user => user.socketId !== socketId);
-  }
-
-  private getUser(userId: string): IUser | undefined {
-    return this.users.find(user => user.userId === userId);
+  private handleIceCandidate(socket: any, sessionId: string, candidate: any) {
+    socket.to(sessionId).emit("ice-candidate", candidate);
+    console.log(`ICE Candidate sent to session ${sessionId}`);
   }
 }
+
+export default SocketManager;

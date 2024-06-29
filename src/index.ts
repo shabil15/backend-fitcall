@@ -6,10 +6,10 @@ dotenv.config()
 const PORT = process.env.PORT || 3000;
 
 const start = () => {
-  httpServer.listen(PORT,()=> {
-    connectDB()
-    console.log(`Server connected to http://localhost/${PORT}`); 
-  })
+  httpServer.listen(PORT, () => {
+    connectDB();
+    console.log(`Server connected to http://localhost:${PORT}`);
+  });
 }
 
 start();

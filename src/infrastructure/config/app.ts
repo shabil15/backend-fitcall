@@ -11,28 +11,29 @@ import chatRouter from '../routes/chatRoute';
 import ratingRouter from '../routes/ratingRoutes';
 import errorHandler from "../../useCase/handler/errorHandler";
 import checkSubscription from "../services/checkSubscription";
-import { SocketManager } from "../services/Socket";
+import SocketManager from "../services/Socket";
 
 dotenv.config();
 export const app = express();
 
 app.use(cors());
 app.use(cookieParser());
-app.use(express.json({limit: "50mb"}));
+app.use(express.json({ limit: "50mb" }));
 app.use(
   express.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 })
 );
 app.use(morgan("dev"));
 
 const httpServer = http.createServer(app);
-const socket = new SocketManager(httpServer);
+new SocketManager(httpServer);
+
 app.use("/api/user", userRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/trainer", trainerRouter);
-app.use('/api/chat',chatRouter);
-app.use('/api/rating',ratingRouter);
-
+app.use('/api/chat', chatRouter);
+app.use('/api/rating', ratingRouter);
 
 app.use(errorHandler);
 checkSubscription();
+
 export { httpServer };
