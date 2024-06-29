@@ -15,4 +15,5 @@ export interface ITrainerRepository {
   addExperience(trainerId:string,experience:string):Promise<ITrainer | null>;
   addSession(trainerId:string,session:ISession):Promise<ITrainer | null>;
   getSessions(trainerId:string): Promise<any>
+  removeSessions(trainerId:string,sessionId:string):Promise<any>;
 }

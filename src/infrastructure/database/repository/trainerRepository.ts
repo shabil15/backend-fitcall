@@ -16,6 +16,7 @@ import { addExperience } from "./trainer/addExperience";
 import { ISession } from "../../../domain/session";
 import { addSession } from "./trainer/addSession";
 import { getSessions } from "./trainer/getSessions";
+import { removeSessions } from "./trainer/removeSessions";
 
 export class TrainerRepository implements ITrainerRepository {
   constructor(private readonly trainerModel: typeof TrainerModel, private readonly userModel: typeof UserModel) { }
@@ -63,4 +64,7 @@ export class TrainerRepository implements ITrainerRepository {
     return getSessions(trainerId,this.userModel,this.trainerModel);
   }
 
+   async removeSessions(trainerId: string, sessionId: string): Promise<any> {
+    return removeSessions(trainerId,sessionId);
+  }
 }

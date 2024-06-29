@@ -22,7 +22,7 @@ class SocketManager {
       socket.on("join-session", (sessionId, userId) => {
         this.joinSession(socket, sessionId, userId);
       });
-
+ 
       socket.on("disconnect", () => {
         this.handleDisconnect(socket);
       });
