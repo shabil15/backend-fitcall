@@ -27,7 +27,8 @@ export const getSessions = async (trainerId: string, userModels: typeof UserMode
                 startTime: '$sessions.startTime',
                 clientName: '$userDetails.name',
                 userId: '$userDetails._id',
-                clientPlan:'$userDetails.goal'
+                clientPlan:'$userDetails.goal',
+                sessionId:'$userDetails.sessionId'
               },
             },
           ]);

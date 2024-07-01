@@ -1,8 +1,10 @@
 import { Server as SocketIOServer } from "socket.io";
 import http from "http";
 
+
 class SocketManager {
   private io: SocketIOServer;
+  private sessions: Map<string, Set<string>>; // Map to track session participants
 
   constructor(server: http.Server) {
     this.io = new SocketIOServer(server, {
@@ -12,6 +14,8 @@ class SocketManager {
       },
     });
 
+    this.sessions = new Map();
+
     this.initialize();
   }
 
@@ -19,10 +23,10 @@ class SocketManager {
     this.io.on("connection", (socket) => {
       console.log("New client connected:", socket.id);
 
-      socket.on("join-session", (sessionId, userId) => {
-        this.joinSession(socket, sessionId, userId);
+      socket.on("join-session", (sessionId) => {
+        this.joinSession(socket, sessionId);
       });
- 
+
       socket.on("disconnect", () => {
         this.handleDisconnect(socket);
       });
@@ -42,38 +46,72 @@ class SocketManager {
     });
   }
 
-  private joinSession(socket: any, sessionId: string, userId: string) {
+  private joinSession(socket: any, sessionId: string) {
+    // Leave all current rooms to ensure socket only stays in one session at a time
+    Object.keys(socket.rooms).forEach(room => {
+      if (room !== socket.id) {
+        socket.leave(room);
+      }
+    });
+
     socket.join(sessionId);
-    socket.to(sessionId).emit("user-connected", userId);
-    console.log(`User ${userId} joined session ${sessionId}`);
+
+    if (!this.sessions.has(sessionId)) {
+      this.sessions.set(sessionId, new Set());
+    }
+
+    const session = this.sessions.get(sessionId);
+    session?.add(socket.id);
+
+    socket.to(sessionId).emit("user-connected", socket.id);
+    console.log(`User ${socket.id} joined session ${sessionId}`);
   }
 
   private handleDisconnect(socket: any) {
     const rooms = Object.keys(socket.rooms);
     rooms.forEach((room) => {
-      socket.to(room).emit("user-disconnected", socket.id);
+      if (room !== socket.id) { // Exclude default room which is the socket's own room
+        socket.to(room).emit("partner-disconnected"); // Notify other participants
+        const session = this.sessions.get(room);
+        session?.delete(socket.id);
+        if (session && session.size === 0) {
+          this.sessions.delete(room);
+        }
+      }
     });
     console.log(`Client disconnected: ${socket.id}`);
   }
 
   private handleOffer(socket: any, sessionId: string, offer: any) {
-    try {
+    if (this.validateSession(socket, sessionId)) {
       socket.to(sessionId).emit("offer", offer);
       console.log(`Offer sent to session ${sessionId}`);
-    } catch (error) {
-      console.error(`Error handling offer for session ${sessionId}:`, error);
+    } else {
+      console.error(`Invalid session for offer. Socket ID: ${socket.id}, Session ID: ${sessionId}`);
     }
   }
-  
 
   private handleAnswer(socket: any, sessionId: string, answer: any) {
-    socket.to(sessionId).emit("answer", answer);
-    console.log(`Answer sent to session ${sessionId}`);
+    if (this.validateSession(socket, sessionId)) {
+      socket.to(sessionId).emit("answer", answer);
+      console.log(`Answer sent to session ${sessionId}`);
+    } else {
+      console.error(`Invalid session for answer. Socket ID: ${socket.id}, Session ID: ${sessionId}`);
+    }
   }
 
   private handleIceCandidate(socket: any, sessionId: string, candidate: any) {
-    socket.to(sessionId).emit("ice-candidate", candidate);
-    console.log(`ICE Candidate sent to session ${sessionId}`);
+    if (this.validateSession(socket, sessionId)) {
+      socket.to(sessionId).emit("ice-candidate", candidate);
+      console.log(`ICE Candidate sent to session ${sessionId}`);
+    } else {
+      console.error(`Invalid session for ICE Candidate. Socket ID: ${socket.id}, Session ID: ${sessionId}`);
+    }
+  }
+
+  private validateSession(socket: any, sessionId: string): boolean {
+    const session = this.sessions.get(sessionId);
+    return session?.has(socket.id) ?? false;
   }
 }
 
