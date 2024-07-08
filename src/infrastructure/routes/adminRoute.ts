@@ -45,6 +45,13 @@ router.patch(
     adminAdapter.block_unBlockTrainer(req,res,next)
 )
 
+router.get(
+  "/dashCards",
+  // AuthMiddleware.protectAdmin,
+  (req:Request,res:Response,next:NextFunction) =>
+    adminAdapter.getDashCards(req,res,next)
+)
+
 router.post(
   "/logout",
   (req:Request,res:Response,next:NextFunction) =>

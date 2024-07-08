@@ -11,6 +11,7 @@ import { blockUnblockUser } from "./admin/blockUser";
 import { getJoinRequests } from "./admin/getJoinRequests";
 import { reviewRequests } from "./admin/reviewRequests";
 import { block_unBlockTrainer } from "./admin/blockTrainer";
+import { getDashCards } from "./admin/getDashCards";
 
 export class AdminUseCase {
   private readonly adminRepository :IAdminRepository;
@@ -82,6 +83,12 @@ export class AdminUseCase {
       this.requestValidator,
       this.trainerRepository,
       _id
+    )
+  }
+
+  async getDashCards(){
+    return getDashCards(
+     this.adminRepository
     )
   }
 }

@@ -105,6 +105,16 @@ export class AdminAdapter {
     }
   }
 
+  async getDashCards(req:Req,res:Res,next:Next) {
+    try {
+      const dashCardsData = await this.adminusecase.getDashCards();
+      res.json(dashCardsData);
+    } catch (error:any) {
+      console.error(error.message);
+      res.status(500).json({ message: 'Server Error' });
+    }
+  }
+
   async logoutAdmin(req:Req,res:Res,next:Next) {
     try {
       res.cookie("jwt","",{

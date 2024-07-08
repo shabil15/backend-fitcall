@@ -1,10 +1,9 @@
 import { Server as SocketIOServer } from "socket.io";
 import http from "http";
 
-
 class SocketManager {
   private io: SocketIOServer;
-  private sessions: Map<string, Set<string>>; // Map to track session participants
+  private sessions: Map<string, Set<string>>;
 
   constructor(server: http.Server) {
     this.io = new SocketIOServer(server, {
@@ -31,7 +30,6 @@ class SocketManager {
         this.handleDisconnect(socket);
       });
 
-      // Handle signaling events
       socket.on("offer", (sessionId, offer) => {
         this.handleOffer(socket, sessionId, offer);
       });
@@ -47,7 +45,6 @@ class SocketManager {
   }
 
   private joinSession(socket: any, sessionId: string) {
-    // Leave all current rooms to ensure socket only stays in one session at a time
     Object.keys(socket.rooms).forEach(room => {
       if (room !== socket.id) {
         socket.leave(room);
@@ -70,8 +67,8 @@ class SocketManager {
   private handleDisconnect(socket: any) {
     const rooms = Object.keys(socket.rooms);
     rooms.forEach((room) => {
-      if (room !== socket.id) { // Exclude default room which is the socket's own room
-        socket.to(room).emit("partner-disconnected"); // Notify other participants
+      if (room !== socket.id) {
+        socket.to(room).emit("partner-disconnected");
         const session = this.sessions.get(room);
         session?.delete(socket.id);
         if (session && session.size === 0) {
