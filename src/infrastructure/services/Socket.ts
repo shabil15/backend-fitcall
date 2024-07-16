@@ -1,9 +1,15 @@
-import { Server as SocketIOServer } from "socket.io";
+import { Server as SocketIOServer, Socket } from "socket.io";
 import http from "http";
+
+interface IUser {
+  userId: string;
+  socketId: string;
+}
 
 class SocketManager {
   private io: SocketIOServer;
   private sessions: Map<string, Set<string>>;
+  private users: IUser[] = [];
 
   constructor(server: http.Server) {
     this.io = new SocketIOServer(server, {
@@ -22,6 +28,7 @@ class SocketManager {
     this.io.on("connection", (socket) => {
       console.log("New client connected:", socket.id);
 
+      // Video call related events
       socket.on("join-session", (sessionId) => {
         this.joinSession(socket, sessionId);
       });
@@ -41,11 +48,21 @@ class SocketManager {
       socket.on("ice-candidate", (sessionId, candidate) => {
         this.handleIceCandidate(socket, sessionId, candidate);
       });
+
+      // Chat related events
+      socket.on("addUser", (userId: string) => {
+        this.addUser(userId, socket.id);
+      });
+
+      socket.on("sendMessage", ({ senderId, receiverId, text }) => {
+        this.handleSendMessage(senderId, receiverId, text);
+      });
     });
   }
 
-  private joinSession(socket: any, sessionId: string) {
-    Object.keys(socket.rooms).forEach(room => {
+  // Video call related methods
+  private joinSession(socket: Socket, sessionId: string) {
+    Object.keys(socket.rooms).forEach((room) => {
       if (room !== socket.id) {
         socket.leave(room);
       }
@@ -64,7 +81,8 @@ class SocketManager {
     console.log(`User ${socket.id} joined session ${sessionId}`);
   }
 
-  private handleDisconnect(socket: any) {
+  private handleDisconnect(socket: Socket) {
+    // Handle video call session disconnection
     const rooms = Object.keys(socket.rooms);
     rooms.forEach((room) => {
       if (room !== socket.id) {
@@ -76,10 +94,14 @@ class SocketManager {
         }
       }
     });
+
+    // Handle chat disconnection
+    this.removeUser(socket.id);
+    this.io.emit("getUsers", this.users);
     console.log(`Client disconnected: ${socket.id}`);
   }
 
-  private handleOffer(socket: any, sessionId: string, offer: any) {
+  private handleOffer(socket: Socket, sessionId: string, offer: any) {
     if (this.validateSession(socket, sessionId)) {
       socket.to(sessionId).emit("offer", offer);
       console.log(`Offer sent to session ${sessionId}`);
@@ -88,7 +110,7 @@ class SocketManager {
     }
   }
 
-  private handleAnswer(socket: any, sessionId: string, answer: any) {
+  private handleAnswer(socket: Socket, sessionId: string, answer: any) {
     if (this.validateSession(socket, sessionId)) {
       socket.to(sessionId).emit("answer", answer);
       console.log(`Answer sent to session ${sessionId}`);
@@ -97,7 +119,7 @@ class SocketManager {
     }
   }
 
-  private handleIceCandidate(socket: any, sessionId: string, candidate: any) {
+  private handleIceCandidate(socket: Socket, sessionId: string, candidate: any) {
     if (this.validateSession(socket, sessionId)) {
       socket.to(sessionId).emit("ice-candidate", candidate);
       console.log(`ICE Candidate sent to session ${sessionId}`);
@@ -106,9 +128,37 @@ class SocketManager {
     }
   }
 
-  private validateSession(socket: any, sessionId: string): boolean {
+  private validateSession(socket: Socket, sessionId: string): boolean {
     const session = this.sessions.get(sessionId);
     return session?.has(socket.id) ?? false;
+  }
+
+  // Chat related methods
+  private addUser(userId: string, socketId: string): void {
+    if (!this.users.some((user) => user.userId === userId)) {
+      this.users.push({ userId, socketId });
+      this.io.emit("getUsers", this.users);
+    }
+  }
+
+  private removeUser(socketId: string): void {
+    this.users = this.users.filter((user) => user.socketId !== socketId);
+  }
+
+  private getUser(userId: string): IUser | undefined {
+    return this.users.find((user) => user.userId === userId);
+  }
+
+  private handleSendMessage(senderId: string, receiverId: string, text: string) {
+    const user = this.getUser(receiverId);
+    if (user) {
+      this.io.to(user.socketId).emit("getMessage", {
+        senderId,
+        text,
+      });
+    } else {
+      console.log("User not found!");
+    }
   }
 }
 

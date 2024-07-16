@@ -52,6 +52,12 @@ router.get(
     adminAdapter.getDashCards(req,res,next)
 )
 
+router.get(
+  "/subscriptions",
+  (req:Request,res:Response,next:NextFunction)=>
+    adminAdapter.getAllSubs(req,res,next)
+)
+
 router.post(
   "/logout",
   (req:Request,res:Response,next:NextFunction) =>

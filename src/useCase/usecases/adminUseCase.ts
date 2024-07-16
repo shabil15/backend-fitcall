@@ -12,6 +12,7 @@ import { getJoinRequests } from "./admin/getJoinRequests";
 import { reviewRequests } from "./admin/reviewRequests";
 import { block_unBlockTrainer } from "./admin/blockTrainer";
 import { getDashCards } from "./admin/getDashCards";
+import {getAllSubs} from "./admin/getAllSubs";
 
 export class AdminUseCase {
   private readonly adminRepository :IAdminRepository;
@@ -89,6 +90,12 @@ export class AdminUseCase {
   async getDashCards(){
     return getDashCards(
      this.adminRepository
+    )
+  }
+
+  async getAllSubs(){
+    return getAllSubs(
+      this.adminRepository
     )
   }
 }

@@ -5,6 +5,8 @@ import AdminModel from "../model/adminModel";
 import { findAdmin } from "./admin/findAdmin";
 import UserModel from "../model/userModel";
 import TrainerModel from "../model/trainerModel";
+import {getAllSubs} from './admin/getAllSubs';
+import {IUserSubscription} from '../../../domain/subscription';
 
 export class AdminRepository implements IAdminRepository {
   constructor (private readonly adminModel:typeof AdminModel) { }
@@ -23,5 +25,9 @@ export class AdminRepository implements IAdminRepository {
 
   async countTrainers():Promise<number |null> {
     return await TrainerModel.countDocuments();
+  }
+
+  async getAllSubs():Promise<IUserSubscription[]>{
+    return getAllSubs()
   }
 }
