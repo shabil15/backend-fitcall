@@ -32,8 +32,8 @@ async createPaymentIntent(
             },
         ],
         mode: 'payment',
-        success_url: 'http://localhost:4000/myplan',
-        cancel_url: 'http://localhost:4000',
+        success_url: 'https://fitcall-beta.vercel.app/myplan',
+        cancel_url: 'https://fitcall-beta.vercel.app/',
         metadata: {
             email: email,
             userId: userId,

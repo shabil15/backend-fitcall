@@ -43,7 +43,7 @@ router.post(
 )
 
 router.get(
-  "/getTrainers",
+  "/getTrainers", 
   (req: Request, res: Response, next: NextFunction) =>
     userAdapter.getTrainers(req, res, next)
 )
@@ -54,17 +54,17 @@ router.get(
     userAdapter.getTrainerDetails(req, res, next)
 )
 
-router.patch("/addProfile", AuthMiddleware.protectUser,
+router.patch("/addProfile", AuthMiddleware.protectUser, AuthMiddleware.checkBlockedStatus,
   (req: Request, res: Response, next: NextFunction) =>
     userAdapter.addProfile(req, res, next)
 );
 
-router.patch("/updateProfile", 
+router.patch("/updateProfile", AuthMiddleware.protectUser, AuthMiddleware.checkBlockedStatus,
   (req: Request, res: Response, next: NextFunction) =>
     userAdapter.updateProfile(req, res, next)
 );
 
-router.post('/payment', 
+router.post('/payment', AuthMiddleware.protectUser, AuthMiddleware.checkBlockedStatus,
  (req: Request, res: Response, next: NextFunction) => {
   userAdapter.payment(req, res, next)
 })
@@ -75,7 +75,7 @@ router.post('/webhook',
   userAdapter.webhook(req, res, next)
 })
 
-router.patch('/updateHealth', AuthMiddleware.protectUser,
+router.patch('/updateHealth', AuthMiddleware.protectUser,AuthMiddleware.checkBlockedStatus,
   (req: Request, res: Response, next: NextFunction) => {
     userAdapter.updateHealth(req, res, next)
   })
@@ -88,12 +88,13 @@ router.get(
 
 
 router.patch(
-  "/setTrainer",
+  "/setTrainer", AuthMiddleware.protectUser, AuthMiddleware.checkBlockedStatus,
   (req:Request,res:Response,next:NextFunction) => 
     userAdapter.setTrainer(req,res,next)
 )
 
-router.get("/subscriptionHistory/:userId", (req, res, next) =>
+router.get("/subscriptionHistory/:userId", AuthMiddleware.protectUser, AuthMiddleware.checkBlockedStatus,
+(req:Request,res:Response,next:NextFunction) =>
   userAdapter.getSubscription(req, res, next)
 );
 
@@ -103,8 +104,7 @@ router.put(
     userAdapter.updateDiet(req,res,next)
 )
 
-router.patch("/addTestRes", 
-// AuthMiddleware.protectUser,
+router.patch("/addTestRes", AuthMiddleware.protectUser, AuthMiddleware.checkBlockedStatus,
   (req: Request, res: Response, next: NextFunction) =>
     userAdapter.addTestRes(req, res, next)
 );
@@ -114,7 +114,7 @@ router.post('/:userId/refund',
     userAdapter.createRefund(req,res,next)
 )
 
-router.get("/:userId/notifications",
+router.get("/:userId/notifications", 
 (req:Request,res:Response,next:NextFunction) =>
   userAdapter.getNotifications(req,res,next)
 )

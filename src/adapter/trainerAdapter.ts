@@ -16,6 +16,13 @@ export class TrainerAdapter {
       const newTrainer = await this.trainerusecase.createTrainer(req.body);
       console.log(newTrainer)
       newTrainer &&
+
+      res.cookie("trainerjwt", newTrainer.token,{
+        httpOnly: true,
+        sameSite: "none",
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+      });
+
         res.status(newTrainer.status).json({
           success: newTrainer.success,
           message: newTrainer.message
@@ -31,9 +38,9 @@ export class TrainerAdapter {
       trainer &&
         res.cookie("trainerjwt", trainer.token, {
           httpOnly: true,
-          sameSite: "strict",
+          sameSite: "none",
           maxAge: 30 * 24 * 60 * 60 * 100,
-        })
+        });
 
       res.status(trainer.status).json({
         success: trainer.success,

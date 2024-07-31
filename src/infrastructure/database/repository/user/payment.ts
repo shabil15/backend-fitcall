@@ -14,7 +14,6 @@ export const payment = async (
             email:user.email
            }
            return responseData
-           
         }else {
             throw new Error("Internal server error");
         }

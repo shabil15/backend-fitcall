@@ -24,49 +24,49 @@ router.post(
 
 router.patch(
   "/updateTrainerProfile",
-  AuthMiddleware.protectTrainer,
+  // AuthMiddleware.protectTrainer,
   (req:Request, res:Response,next:NextFunction) =>
     trainerAdapter.updateProfile(req,res,next)
 )
 
 router.patch(
   "/addProfile",
-  AuthMiddleware.protectTrainer,
+  // AuthMiddleware.protectTrainer,
   (req:Request, res:Response, next:NextFunction) =>
     trainerAdapter.addProfile(req,res,next)
 )
 
 router.post(
   "/getClients",
-  AuthMiddleware.protectTrainer,
+  // AuthMiddleware.protectTrainer,
   (req:Request,res:Response,next:NextFunction) => 
     trainerAdapter.getClients(req,res,next)
 )
 
 router.patch(
   "/addDescription/:trainerId",
-  AuthMiddleware.protectTrainer,
+  // AuthMiddleware.protectTrainer,
   (req:Request,res:Response,next:NextFunction)=> 
     trainerAdapter.addDescription(req,res,next)
 )
 
 router.patch(
   "/addExperience/:trainerId",
-  AuthMiddleware.protectTrainer,
+  // AuthMiddleware.protectTrainer,
   (req:Request,res:Response,next:NextFunction)=> 
     trainerAdapter.addExperience(req,res,next)
 )
 
 router.post(
   "/addsession", 
-  AuthMiddleware.protectTrainer,
+  // AuthMiddleware.protectTrainer,
   (req:Request, res:Response,next:NextFunction) => 
   trainerAdapter.addSession(req, res,next)
 );
 
 router.get(
   "/:trainerId/sessions",
-  AuthMiddleware.protectTrainer,
+  // AuthMiddleware.protectTrainer,
   async(req:Request,res:Response,next:NextFunction) =>
     trainerAdapter.getSessions(req,res,next) 
 )

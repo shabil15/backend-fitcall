@@ -44,12 +44,7 @@ export const loginTrainer = async(
 
       const match :boolean = await bcrypt.compare(password,trainer.password);
       if(match){
-        const token = jwt.createJWT(
-        trainer._id,
-        trainer.email,
-        "trainer",
-        trainer.name
-        );
+        const token = jwt.createJWT(trainer._id, trainer.email, "trainer", trainer.name);
         const responseData : trainerResponseData = {
           _id:trainer._id,
           name:trainer.name,

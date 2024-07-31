@@ -15,7 +15,7 @@ export class UserAdapter {
 
         res.cookie("userjwt", newUser.token, {
           httpOnly: true,
-          sameSite: "strict",
+          sameSite: "none",
           maxAge: 30 * 24 * 60 * 60 * 1000,
         });
 
@@ -60,7 +60,7 @@ export class UserAdapter {
 
         res.cookie("userjwt", user.token, {
           httpOnly: true,
-          sameSite: "strict",
+          sameSite: "none",
           maxAge: 30 * 24 * 60 * 60 * 1000,
         });
 
@@ -82,7 +82,7 @@ export class UserAdapter {
       user &&
         res.cookie("userjwt", user.token, {
           httpOnly: true,
-          sameSite: "strict",
+          sameSite: "none",
           maxAge: 30 * 24 * 60 * 60 * 1000,
         });
 
@@ -114,8 +114,8 @@ export class UserAdapter {
       newUser &&
         res.cookie("userjwt", newUser.token, {
           httpOnly: true,
-          sameSite: "strict", // Prevent CSRF attacks
-          maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+          sameSite: "none", 
+          maxAge: 30 * 24 * 60 * 60 * 1000, 
         });
 
       res.status(newUser.status).json({

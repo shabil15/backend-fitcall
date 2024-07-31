@@ -110,6 +110,36 @@ class AuthMiddleware {
     }
   }
 
+  static async checkBlockedStatus(req: Request, res: Response, next: NextFunction){
+    console.log('trainer protect');
+    const token = req.cookies.userjwt;
+
+    if (!token) {
+      return res.status(401).json({ message: 'Not authorized, no token' });
+    }
+
+    try {
+      const decoded: any = jwt.verify(token, process.env.JWT_KEY as string);
+
+      const userRepository = new UserRepository(UserModel);
+      const user = await userRepository.findUser(decoded.email);
+
+      if (user) {
+        if (user.isBlocked) {
+          return res.status(403).json({ message: 'Your account is blocked. Please contact support.' });
+        }
+
+        req.user = user;
+
+        next();
+      } else {
+        return res.status(404).json({ message: 'User not found' });
+      }
+    } catch (error) {
+      console.error('Token verification error:', error);
+      return res.status(401).json({ message: 'Not authorized, invalid token' });
+    }
+  }
 
 
 }
