@@ -16,6 +16,7 @@ export class UserAdapter {
         res.cookie("userjwt", newUser.token, {
           httpOnly: true,
           sameSite: "none",
+          secure:true,
           maxAge: 30 * 24 * 60 * 60 * 1000,
         });
 
@@ -60,6 +61,7 @@ export class UserAdapter {
 
         res.cookie("userjwt", user.token, {
           httpOnly: true,
+          secure:true,
           sameSite: "none",
           maxAge: 30 * 24 * 60 * 60 * 1000,
         });
@@ -82,6 +84,7 @@ export class UserAdapter {
       user &&
         res.cookie("userjwt", user.token, {
           httpOnly: true,
+          secure:true,
           sameSite: "none",
           maxAge: 30 * 24 * 60 * 60 * 1000,
         });
@@ -114,6 +117,7 @@ export class UserAdapter {
       newUser &&
         res.cookie("userjwt", newUser.token, {
           httpOnly: true,
+          secure:true,
           sameSite: "none", 
           maxAge: 30 * 24 * 60 * 60 * 1000, 
         });
@@ -132,6 +136,7 @@ export class UserAdapter {
     try {
       res.cookie("jwt", "", {
         httpOnly: true,
+        secure:true,
         expires: new Date(0),
       });
       res.status(200).json({ message: "Logged out successfully" });

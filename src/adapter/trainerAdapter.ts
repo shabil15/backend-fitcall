@@ -19,6 +19,7 @@ export class TrainerAdapter {
 
       res.cookie("trainerjwt", newTrainer.token,{
         httpOnly: true,
+        secure:true,
         sameSite: "none",
         maxAge: 30 * 24 * 60 * 60 * 1000,
       });
@@ -38,6 +39,7 @@ export class TrainerAdapter {
       trainer &&
         res.cookie("trainerjwt", trainer.token, {
           httpOnly: true,
+          secure:true,
           sameSite: "none",
           maxAge: 30 * 24 * 60 * 60 * 100,
         });
@@ -56,6 +58,7 @@ export class TrainerAdapter {
     try {
       res.cookie("jwt", "", {
         httpOnly: true,
+        secure:true,
         expires: new Date(0),
       })
       res.status(200).json({ message: "Logged out successfully" })
