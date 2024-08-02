@@ -93,7 +93,8 @@ router.patch(
     userAdapter.setTrainer(req,res,next)
 )
 
-router.get("/subscriptionHistory/:userId", AuthMiddleware.protectUser, AuthMiddleware.checkBlockedStatus,
+router.get("/subscriptionHistory/:userId",
+AuthMiddleware.protectUser, AuthMiddleware.checkBlockedStatus,
 (req:Request,res:Response,next:NextFunction) =>
   userAdapter.getSubscription(req, res, next)
 );
