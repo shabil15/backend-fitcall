@@ -1,71 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FitCall - README</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            line-height: 1.6;
-            margin: 20px;
-        }
-
-        h1 {
-            color: #2c3e50;
-        }
-
-        h2, h3 {
-            color: #34495e;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        ul li::before {
-            content: "💡";
-            margin-right: 10px;
-        }
-
-        code {
-            background-color: #eaeaea;
-            padding: 2px 4px;
-            border-radius: 4px;
-            font-family: "Courier New", Courier, monospace;
-        }
-
-        pre {
-            background-color: #eaeaea;
-            padding: 10px;
-            border-radius: 4px;
-            overflow-x: auto;
-        }
-
-        a {
-            color: #2980b9;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .section {
-            margin-bottom: 30px;
-        }
-
-        .emoji {
-            font-size: 1.2em;
-        }
-    </style>
-</head>
-
-<body>
 
     <h1>💪 FitCall - Personalized Fitness Training Platform</h1>
 
@@ -171,6 +104,4 @@ REACT_APP_STRIPE_KEY=your_stripe_public_key</code></pre>
         <p>This project is licensed under the MIT License.</p>
     </div>
 
-</body>
 
-</html>
