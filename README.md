@@ -16,7 +16,7 @@ FitCall is a comprehensive platform designed to connect users with expert fitnes
 - **Frontend:** React.js, TypeScript, Redux, Tailwind CSS, Material UI, RTK Query
 - **Backend:** Node.js, Express.js, TypeScript, WebRTC, Socket.IO, JWT (for authentication)
 - **Database:** MongoDB, Firebase (for real-time data handling)
-- **Deployment:** AWS (EC2, Nginx), Docker, Vercel, Render
+- **Deployment:** AWS (EC2, Nginx), Docker, Vercel
 - **Payment Integration:** Stripe
 - **Other Tools:** Git, Postman, Figma
 
@@ -25,14 +25,14 @@ FitCall is a comprehensive platform designed to connect users with expert fitnes
 ### Prerequisites
 Ensure you have the following installed on your machine:
 - **Node.js** (v14.x or later)
-- **npm** or **yarn**
+- **npm** 
 - **MongoDB** (Running locally or on a cloud service like MongoDB Atlas)
 - **Docker** (Optional, for containerized deployment)
 
 ### Steps to Run the Project
 1. **Clone the Repository:**
     ```bash
-    git clone https://github.com/yourusername/fitcall.git
+    git clone https://github.com/shabil15/backend-fitcall.git
     cd fitcall
     ```
 2. **Install Dependencies:** Navigate to the backend and frontend directories and install the required dependencies.
@@ -52,11 +52,6 @@ Ensure you have the following installed on your machine:
         MONGO_URI=your_mongodb_connection_string
         JWT_SECRET=your_jwt_secret
         STRIPE_SECRET_KEY=your_stripe_secret_key
-        ```
-    - **Frontend:**
-        ```bash
-        REACT_APP_API_URL=http://localhost:5000
-        REACT_APP_STRIPE_KEY=your_stripe_public_key
         ```
 4. **Start the Backend Server:** In the backend directory:
     ```bash
