@@ -19,14 +19,14 @@ FitCall is a comprehensive platform designed to connect users with expert fitnes
 - **Deployment:** AWS (EC2, Nginx), Docker, Vercel
 - **Payment Integration:** Stripe
 - **Other Tools:** Git, Postman, Figma
- ---
+
 
 ## 🎥 Explore FitCall
 
 - **🌐 Live Site:** [FitCall](https://fitcall-beta.vercel.app/)
 - **📂 GitHub Repository:** [FitCall- Frontend](https://github.com/shabil15/fitcall--frontend) , [FitCall- Backend](https://github.com/shabil15/backend-fitcall)
 
----
+
 
 ## 🚀 Installation and Setup
 
